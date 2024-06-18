@@ -5,10 +5,11 @@ import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import React from 'react'
+import Category from '../Category'
 
 const Home = () => {
     return (
-        <div className='tw-fc w-full border-l-2 border-primary pt-2'>
+        <div className='tw-fc w-full  pt-2'>
             <div className="px-10">
                 <div className="tw-jb ">
                     <h3 className='tw-lg-b'>Out now</h3>
@@ -70,41 +71,14 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className="bg-black pb-10 text-white p-5 px-10 tw-fc gap-4">
-                <div className="tw-jb ">
-                    <h3 className='tw-lg-b gap-1 tw-ic'>Popular<span className='text-destructive'>this month</span> </h3>
-                    <div className="gap-1 tw-ic">
-                        <Button variant="outline" size="icon">
-                            <ChevronLeft className="h-4 w-4 text-primary" />
-                        </Button>
-                        <Button variant="outline" size="icon">
-                            <ChevronRight className="h-4 w-4 text-primary" />
-                        </Button>
-                    </div>
-                </div>
-                <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-10">
-                    {[1, 2, 3, 4, 5].map(item => (
-                        <div key={item} className="h-[32rem] border tw-fc">
-                            <Skeleton className="flex-1 w-full" />
-                            <Separator />
-                            <div className="tw-cc tw-fc gap-3 p-2">
-                                <Skeleton className='w-24 h-7' />
-                                <Skeleton className='w-36 h-6' />
-                            </div>
-                            <Separator />
-                            <div className="tw-fc  gap-2 p-2">
-                                <div className="tw-ic gap-2 p-2">
-                                    <Skeleton className='h-5 w-10' />
-                                    <Skeleton className='h-5 w-12' />
-                                </div>
-                                <Skeleton className='h-8 w-full' />
-                                <Skeleton className='h-6 w-32' />
-                                <Skeleton className='h-9 w-32' />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <Category title={{ normal: 'Popular', bold: 'this month' }} list={[{
+                title: 'title',
+                author: 'string',
+                chapter: 0,
+                categories: ['asd', 'asd', 'asdsa'],
+                star: 0,
+                poster: 'string'
+            }]} type='POPULAR_THIS_MONTH' />
         </div>
     )
 }

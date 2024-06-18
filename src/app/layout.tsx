@@ -20,12 +20,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
-        <div className="flex">
-          <div className=" min-h-screen flex-1 p-4 tw-cc ">
-            <Mainsidebar />
+        <div className="">
+          <NavBar />
+          <div className="relative flex">
+            <div className="fixed top-0 left-0 bg-subSecondary h-full py-4 tw-cc border-r-2 border-primary px-10">
+              <Mainsidebar />
+            </div>
+            <div className="ml-64 flex-1 mt-24">
+              {children}
+            </div>
           </div>
-          {children}
+
         </div>
       </body>
     </html>
