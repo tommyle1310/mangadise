@@ -2,32 +2,144 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background            : 0 0% 100%;
+    --foreground            : 224 71.4% 4.1%;
+    --card                  : 0 0% 100%;
+    --card-foreground       : 224 71.4% 4.1%;
+    --popover               : 0 0% 100%;
+    --popover-foreground    : 224 71.4% 4.1%;
+    --primary               : 262.1 83.3% 57.8%;
+    --primary-foreground    : 210 20% 98%;
+    --secondary             : 220 14.3% 95.9%;
+    --secondary-foreground  : 220.9 39.3% 11%;
+    --muted                 : 220 14.3% 95.9%;
+    --muted-foreground      : 220 8.9% 46.1%;
+    --accent                : 220 14.3% 95.9%;
+    --accent-foreground     : 220.9 39.3% 11%;
+    --destructive           : 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border                : 220 13% 91%;
+    --input                 : 220 13% 91%;
+    --ring                  : 262.1 83.3% 57.8%;
+    --radius                : 0.5rem;
+  }
+
+  .dark {
+    --background            : 224 71.4% 4.1%;
+    --foreground            : 210 20% 98%;
+    --card                  : 224 71.4% 4.1%;
+    --card-foreground       : 210 20% 98%;
+    --popover               : 224 71.4% 4.1%;
+    --popover-foreground    : 210 20% 98%;
+    --primary               : 263.4 70% 50.4%;
+    --primary-foreground    : 210 20% 98%;
+    --secondary             : 215 27.9% 16.9%;
+    --secondary-foreground  : 210 20% 98%;
+    --muted                 : 215 27.9% 16.9%;
+    --muted-foreground      : 217.9 10.6% 64.9%;
+    --accent                : 215 27.9% 16.9%;
+    --accent-foreground     : 210 20% 98%;
+    --destructive           : 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border                : 215 27.9% 16.9%;
+    --input                 : 215 27.9% 16.9%;
+    --ring                  : 263.4 70% 50.4%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.tw-cc {
+  @apply flex justify-center items-center;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.tw-fc {
+  @apply flex flex-col;
+}
+
+.tw-jb {
+  @apply flex justify-between items-center;
+}
+
+
+.tw-ic {
+  @apply flex items-center;
+}
+
+.tw-sm-sb {
+  @apply font-semibold text-sm
+}
+
+.tw-md-sb {
+  @apply font-semibold
+}
+
+.tw-lg-sb {
+  @apply font-semibold text-lg
+}
+
+.tw-xl-sb {
+  @apply font-semibold text-xl
+}
+
+.tw-2xl-sb {
+  @apply font-semibold text-2xl
+}
+
+.tw-3xl-sb {
+  @apply font-semibold text-3xl
+}
+
+.tw-sm-b {
+  @apply font-bold text-sm
+}
+
+.tw-md-b {
+  @apply font-bold
+}
+
+.tw-lg-b {
+  @apply font-bold text-lg
+}
+
+.tw-xl-b {
+  @apply font-bold text-xl
+}
+
+.tw-2xl-b {
+  @apply font-bold text-2xl
+}
+
+.tw-3xl-b {
+  @apply font-bold text-3xl
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar {
+  width: 10px;
+  /* Width of the scrollbar */
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #7c3aed;
+  border-radius   : 5px;
+}
+
+/* Track background color */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
