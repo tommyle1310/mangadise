@@ -9,7 +9,6 @@ import MainSidebarItem from './MainSidebarItem'
 
 const MainSidebar = () => {
   const pathname = usePathname()
-  console.log(pathname);
 
 
   return (

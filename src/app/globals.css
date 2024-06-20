@@ -114,6 +114,10 @@
   @apply font-bold text-3xl
 }
 
+.tw-btn-outline {
+  @apply bg-transparent hover:text-primary
+}
+
 /* Style the scrollbar track */
 ::-webkit-scrollbar {
   width: 10px;
