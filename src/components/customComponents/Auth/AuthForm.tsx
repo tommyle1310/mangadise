@@ -29,7 +29,7 @@ type AuthFormProps = {
 const AuthForm: React.FC<AuthFormProps> = ({ altBtn, btn, title }) => {
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
                 <Button variant={title === 'Log in' ? 'default' : 'secondary'}>{title}</Button>
             </DialogTrigger>
             <DialogContent>

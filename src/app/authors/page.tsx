@@ -1,15 +1,17 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+'use client'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
+import { decrement, increment } from '@/lib/features/counter/counterSlice'
+import { RootState } from '@/lib/store'
 import { Filter, Search } from 'lucide-react'
-import Image from 'next/image'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const page = () => {
+    const count = useSelector((state: RootState) => state.counter.value)
+    const dispatch = useDispatch()
+
     return (
         <div className='max-w-screen-xl mx-auto tw-fc gap-4'>
             <div className="tw-jb">
@@ -21,6 +23,29 @@ const page = () => {
                     <Filter />
                 </Label>
             </div>
+
+
+            <div>
+                <div>
+                    <button
+                        aria-label="Increment value"
+                        onClick={() => dispatch(increment())}
+                    >
+                        Increment
+                    </button>
+                    <span>{count}</span>
+                    <button
+                        aria-label="Decrement value"
+                        onClick={() => dispatch(decrement())}
+                    >
+                        Decrement
+                    </button>
+                </div>
+            </div>
+
+
+
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {[1, 2, 3, 4, 5].map(item => (
                     <div key={item} className='tw-ic gap-3 border-2 border-secondary p-3 rounded-lg'>

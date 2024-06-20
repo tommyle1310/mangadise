@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import Mainsidebar from "@/components/customComponents/MainSidebar/MainSidebar";
 import NavBar from "@/components/customComponents/NavBar/NavBar";
+import StoreProvider from "./Provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,18 +21,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="">
-          <NavBar />
-          <div className="relative flex">
-            <div className="fixed top-0 left-0 bg-subSecondary h-full py-4 tw-cc border-r-2 border-primary px-10">
-              <Mainsidebar />
-            </div>
-            <div className="ml-64 flex-1 mt-24">
-              {children}
+        <StoreProvider>
+          <div className="">
+            <NavBar />
+            <div className="relative flex">
+              <div className="fixed top-0 left-0 bg-subSecondary h-full py-4 tw-cc border-r-2 border-primary px-10">
+                <Mainsidebar />
+              </div>
+              <div className="ml-64 flex-1 mt-24">
+                {children}
+              </div>
             </div>
           </div>
-
-        </div>
+        </StoreProvider>
       </body>
     </html>
   );
