@@ -28,7 +28,7 @@ export default function RootLayout({
               <div className="fixed top-0 left-0 bg-subSecondary h-full py-4 tw-cc border-r-2 border-primary px-10">
                 <Mainsidebar />
               </div>
-              <div className="ml-64 flex-1 mt-24">
+              <div className="ml-64 flex-1 mt-20">
                 {children}
               </div>
             </div>

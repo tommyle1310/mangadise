@@ -10,13 +10,13 @@ import Category from '../Category'
 import useFetchHomePage from '@/hooks/useFetchHomePage'
 import useFetchCategories from '@/hooks/useFetchCategories'
 import usePagination, { renderPageNumbers } from '@/hooks/usePagination'
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
 import useFetchMangasByType from '@/hooks/useFetchMangasByType'
 import CustomPagination from '../customPagination'
+import Link from 'next/link'
 
 
 const Home = () => {
-    const { homeData, isLoading, mangas } = useFetchHomePage()
+    const { isLoading, mangas } = useFetchHomePage()
     const { categories } = useFetchCategories()
     const { mangas: NewMangas, isLoading: isLoadingNewMangas } = useFetchMangasByType('truyen-moi')
 
@@ -162,7 +162,9 @@ const Home = () => {
                                                                     ))}
                                                                 </div>
                                                                 <div className="tw-ic ">
-                                                                    <Button>Read</Button>
+                                                                    <Link href={`/discover/${manga.slug}`}>
+                                                                        <Button>Read</Button>
+                                                                    </Link>
                                                                 </div>
                                                             </>
                                                         )}

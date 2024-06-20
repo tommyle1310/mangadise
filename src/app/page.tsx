@@ -7,7 +7,7 @@ import Home from '@/components/customComponents/Home/Home'
 
 export default function HomePage() {
   return (
-    <div className="w-full h-20 ">
+    <div className="w-full h-20">
       <Home />
     </div>
   );
