@@ -1,3 +1,5 @@
+'use client'
+import { PaginationLink } from '@/components/ui/pagination';
 import { useState } from 'react';
 
 const usePagination = (items: any[] = [], itemsPerPage: number = 10) => {
@@ -37,3 +39,19 @@ const usePagination = (items: any[] = [], itemsPerPage: number = 10) => {
 };
 
 export default usePagination;
+
+export const renderPageNumbers = ({ totalPages, currentPage, handlePageChange }: { totalPages: number, currentPage: number, handlePageChange: (pageNumber: number) => void }) => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(
+            <PaginationLink
+                key={i}
+                onClick={() => handlePageChange(i)}
+                className={`px-2 py-1 cursor-pointer ${currentPage === i ? 'bg-primary' : ''}`}
+            >
+                {i}
+            </PaginationLink>
+        );
+    }
+    return pageNumbers;
+};

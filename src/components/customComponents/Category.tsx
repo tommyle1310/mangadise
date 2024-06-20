@@ -5,6 +5,11 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious } from '../ui/carousel'
 import { Card, CardContent } from '../ui/card'
+import { IMangaProps } from '@/hooks/useFetchHomePage'
+import { maximizeWordLimit } from '@/lib/helperFuncs'
+import { FaHeart } from 'react-icons/fa'
+import CustomPagination from './customPagination'
+import { renderPageNumbers } from '@/hooks/usePagination'
 
 type CategoryProps = {
     title: {
@@ -12,19 +17,18 @@ type CategoryProps = {
         bold: string
     }
     type: string
-    list:
-    {
-        title: string,
-        author: string,
-        chapter: number,
-        categories: string[],
-        star: number,
-        poster: string
-    }[]
+    list: IMangaProps[]
+    isLoading: boolean,
+    currentPage: number
+    handleNext: () => void
+    handlePrev: () => void
+    handlePageChange: (pageNumber: number) => void
+    totalPages: number
 }
 
-const Category: React.FC<CategoryProps> = ({ title, type, list }) => {
-    return (
+const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, currentPage, handleNext, handlePrev, handlePageChange, totalPages }) => {
+
+    if (isLoading) return (
         <div className="bg-black pb-10 text-white p-5 px-10 tw-fc gap-4">
             <div className="tw-jb ">
                 <h3 className='tw-lg-b gap-1 tw-ic'>{title.normal}<span className='text-destructive'>{title.bold}</span> </h3>
@@ -52,7 +56,6 @@ const Category: React.FC<CategoryProps> = ({ title, type, list }) => {
                                     <Separator />
                                     <div className="tw-cc tw-fc gap-3">
                                         <Skeleton className='w-24 h-7' />
-                                        <Skeleton className='w-36 h-6' />
                                     </div>
                                     <Separator />
                                     <div className="tw-fc  gap-2 p-2">
@@ -72,6 +75,69 @@ const Category: React.FC<CategoryProps> = ({ title, type, list }) => {
             </Carousel>
         </div>
     )
+
+    return (
+        <div className="bg-black pb-10 text-white p-5 px-10 tw-fc gap-4">
+            <div className="tw-jb ">
+                <h3 className='tw-lg-b gap-1 tw-ic'>{title.normal}<span className='text-destructive'>{title.bold}</span> </h3>
+                <div className="gap-1 tw-ic">
+                    <Button variant="outline" size="icon">
+                        <ChevronLeft className="h-4 w-4 text-primary" />
+                    </Button>
+                    <Button variant="outline" size="icon">
+                        <ChevronRight className="h-4 w-4 text-primary" />
+                    </Button>
+                </div>
+            </div>
+            <Carousel
+                opts={{
+                    align: "start",
+                }}
+                className="max-w-screen-xl tw-jb "
+            >
+                <CarouselContent>
+                    {list.map((manga, index) => (
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/5">
+                            <Card>
+                                <CardContent className="flex h-[32rem] tw-fc gap-3 p-4">
+                                    <div className="flex-1 w-full" style={{
+                                        backgroundImage: `url('https://otruyenapi.com/uploads/comics/${manga.thumb_url}')`,
+                                        backgroundSize: 'cover',
+                                    }} />
+                                    <Separator />
+                                    <div className="tw-cc tw-fc gap-3">
+                                        <h4 className='text-primary text-center tw-lg-sb'>{manga.name}</h4>
+                                    </div>
+                                    <Separator />
+                                    <div className="tw-fc  gap-2 p-2">
+                                        <div className="tw-md-sb tw-ic gap-1 p-2">
+                                            <span className='text-subMain'> {manga.chaptersLatest[0].chapter_name}</span>
+                                            <h5>Chapter</h5>
+                                        </div>
+                                        <div className="tw-ic flex-wrap">{maximizeWordLimit(manga.category.map((item, i, arr) => i === arr.length - 1 ? `${item.name}` : ` ${item.name} -`).join(' '))}</div>
+                                        <div className="tw-ic">
+                                            <Button variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                        </div>
+
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
+            <CustomPagination
+                currentPage={currentPage}
+                handleNext={handleNext}
+                handlePageChange={handlePageChange}
+                handlePrev={handlePrev}
+                totalPages={totalPages}
+            />
+        </div>
+    )
 }
 
 export default Category
+
+
+
