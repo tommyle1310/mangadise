@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import useFetchDetailManga from '@/hooks/useFetchDetailManga'
 import {
     Tabs,
@@ -9,23 +9,24 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { myListArrs } from '@/lib/constants'
 
 const page = () => {
     const params = useParams()
+    const router = useRouter()
 
     const { detailManga } = useFetchDetailManga(params.slug.toString())
-    console.log(detailManga?.thumb_url);
+    const handleRead = async (item: {
+        filename: string;
+        chapter_title: string;
+        chapter_api_data: string;
+        chapter_name: string;
+    }) => {
+        const idChapter = (item.chapter_api_data.substring('https://sv1.otruyencdn.com/v1/api/chapter/'.length));
+        const findEPPosition = (detailManga?.chapters[0].server_data.findIndex(i => i['chapter_api_data'] === item.chapter_api_data) || 0) + 1
+        router.push(`/discover/${params.slug}/${idChapter}&${findEPPosition}`)
+
+    }
 
     return (
         <div className='p-3 tw-fc w-full'>
@@ -61,27 +62,18 @@ const page = () => {
                     </div>
                 </TabsContent>
                 <TabsContent value="chapter">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Password</CardTitle>
-                            <CardDescription>
-                                Change your password here. After saving, you'll be logged out.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            <div className="space-y-1">
-                                <Label htmlFor="current">Current password</Label>
-                                <Input id="current" type="password" />
+                    {detailManga?.chapters.map(item => (
+                        <div key={item.server_name} className='tw-fc gap-4'>
+                            <div className='tw-ic gap-4'>
+                                <Button variant={'secondary'}>{item.server_name}</Button>
                             </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="new">New password</Label>
-                                <Input id="new" type="password" />
+                            <div className="tw-fc gap-2">
+                                {item.server_data.map((item, index) => (
+                                    <Button onClick={() => handleRead(item)} key={index} variant={'outline'} className='tw-ic justify-start gap-1 tw-md-sb bg-subSecondary'>EP <span className='tw-md-b text-primary'>{item.chapter_name}</span> {item.filename}</Button>
+                                ))}
                             </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button>Save password</Button>
-                        </CardFooter>
-                    </Card>
+                        </div>
+                    ))}
                 </TabsContent>
             </Tabs>
         </div>

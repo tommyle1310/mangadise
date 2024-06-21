@@ -1,9 +1,9 @@
-'use client'
-import { PaginationLink } from '@/components/ui/pagination';
-import { useState } from 'react';
+import { PaginationEllipsis, PaginationLink } from '@/components/ui/pagination';
+import { useState, useEffect } from 'react';
 
-const usePagination = (items: any[] = [], itemsPerPage: number = 10) => {
-    const [currentPage, setCurrentPage] = useState(1);
+const usePagination = (items: any[] = [], itemsPerPage: number = 10, defaultCurrentPage = 1, type?: 'READ_MANGA', slug?: string) => {
+    const [currentPage, setCurrentPage] = useState(defaultCurrentPage);
+    const [firstChapterApiData, setFirstChapterApiData] = useState<string | null>(null);
 
     // Calculate total pages
     const totalPages = Math.ceil(items.length / itemsPerPage);
@@ -12,6 +12,30 @@ const usePagination = (items: any[] = [], itemsPerPage: number = 10) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+
+    // Handle async fetching of first chapter api data
+    useEffect(() => {
+        const fetchFirstChapterApiData = async () => {
+            if (type === 'READ_MANGA' && currentItems.length > 0) {
+                const first = await currentItems[0]?.chapter_api_data?.toString()?.split('https://sv1.otruyencdn.com/v1/api/chapter/')[1];
+                setFirstChapterApiData(first);
+            }
+        };
+
+        fetchFirstChapterApiData();
+    }, [currentItems, type]);
+
+    // Effect to update router when firstChapterApiData changes
+    useEffect(() => {
+        if (type === 'READ_MANGA' && firstChapterApiData && slug && defaultCurrentPage !== 1) {
+
+            const newUrl = `/discover/${slug}/${firstChapterApiData}&${defaultCurrentPage}`;
+            if (window.location.pathname !== newUrl) {
+                window.history.pushState({}, '', newUrl); // Update browser history without refreshing
+            }
+        }
+    }, [firstChapterApiData, slug, type]);
 
     // Change page
     const handlePageChange = (pageNumber: number) => {
@@ -40,9 +64,43 @@ const usePagination = (items: any[] = [], itemsPerPage: number = 10) => {
 
 export default usePagination;
 
-export const renderPageNumbers = ({ totalPages, currentPage, handlePageChange }: { totalPages: number, currentPage: number, handlePageChange: (pageNumber: number) => void }) => {
+
+export const renderPageNumbers = ({
+    totalPages,
+    currentPage,
+    handlePageChange
+}: {
+    totalPages: number,
+    currentPage: number,
+    handlePageChange: (pageNumber: number) => void
+}) => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
+
+    // Function to determine if ellipses (...) should be shown
+    const shouldShowEllipses = (pageNumber: number) => {
+        return (
+            pageNumber > 2 && pageNumber < totalPages - 1 && Math.abs(currentPage - pageNumber) > 2
+        );
+    };
+
+    // Add the first page
+    pageNumbers.push(
+        <PaginationLink
+            key={1}
+            onClick={() => handlePageChange(1)}
+            className={`px-2 py-1 cursor-pointer ${currentPage === 1 ? 'bg-primary' : ''}`}
+        >
+            {1}
+        </PaginationLink>
+    );
+
+    // Add ellipses if needed
+    if (shouldShowEllipses(2)) {
+        pageNumbers.push(<PaginationEllipsis />);
+    }
+
+    // Add pages
+    for (let i = Math.max(2, currentPage - 2); i <= Math.min(currentPage + 2, totalPages - 1); i++) {
         pageNumbers.push(
             <PaginationLink
                 key={i}
@@ -53,5 +111,24 @@ export const renderPageNumbers = ({ totalPages, currentPage, handlePageChange }:
             </PaginationLink>
         );
     }
+
+    // Add ellipses if needed
+    if (shouldShowEllipses(totalPages - 1)) {
+        pageNumbers.push(<PaginationEllipsis />);
+    }
+
+    // Add the last page
+    if (totalPages > 1) {
+        pageNumbers.push(
+            <PaginationLink
+                key={totalPages}
+                onClick={() => handlePageChange(totalPages)}
+                className={`px-2 py-1 cursor-pointer ${currentPage === totalPages ? 'bg-primary' : ''}`}
+            >
+                {totalPages}
+            </PaginationLink>
+        );
+    }
+
     return pageNumbers;
 };

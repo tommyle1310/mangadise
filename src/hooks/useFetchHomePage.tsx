@@ -28,7 +28,8 @@ export interface IMangaProps {
         server_data: {
             filename: string,
             chapter_title: string,
-            chapter_api_data: string
+            chapter_api_data: string,
+            chapter_name: string
         }[]
     }[]
 }

@@ -44,7 +44,7 @@ const Discover = () => {
     } = usePagination(upComingMangas, 5);
 
     return (
-        <div className='tw-fc -mt-3'>
+        <div className='tw-fc '>
             <Category
                 isLoading={isLoadingNewMangas}
                 title={{ normal: 'Recent', bold: 'uploads' }}
