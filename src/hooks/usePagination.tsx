@@ -1,7 +1,7 @@
 import { PaginationEllipsis, PaginationLink } from '@/components/ui/pagination';
 import { useState, useEffect } from 'react';
 
-const usePagination = (items: any[] = [], itemsPerPage: number = 10, defaultCurrentPage = 1, type?: 'READ_MANGA', slug?: string) => {
+const usePagination = (items: any[] = [], itemsPerPage = 5, defaultCurrentPage = 1, type?: 'READ_MANGA', slug?: string) => {
     const [currentPage, setCurrentPage] = useState(defaultCurrentPage);
     const [firstChapterApiData, setFirstChapterApiData] = useState<string | null>(null);
 

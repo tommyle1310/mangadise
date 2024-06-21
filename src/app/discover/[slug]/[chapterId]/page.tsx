@@ -21,15 +21,16 @@ const page = () => {
     const paginationReadManga = detailManga?.chapters[0].server_data
 
     const { currentItems, currentPage, handleNextPage, handlePageChange, handlePreviousPage, totalPages } = usePagination(paginationReadManga, 1, chapterNum, 'READ_MANGA', slug.toString())
-    const { readManga, readMangaData } = useFetchReadManga(currentItems[0]?.chapter_api_data.substring('https://sv1.otruyencdn.com/v1/api/chapter/'.length))
-    // console.log(currentItems[0]?.chapter_api_data.substring('https://sv1.otruyencdn.com/v1/api/chapter/'.length));
+    const chaptedID = currentItems[0]?.chapter_api_data.substring('https://sv1.otruyencdn.com/v1/api/chapter/'.length)
+    const { readManga, readMangaData } = useFetchReadManga(chaptedID)
+    console.log(chaptedID);
 
 
 
     return (
-        <div className=' p-4 tw-fc items-center gap-4'>
+        <div className=' sm:p-4 tw-fc items-center sm:gap-4'>
             <h4 className='tw-xl-b text-primary'>{readManga?.comic_name}</h4>
-            <div className="tw-fc gap-3 text-white items-center">
+            <div className="tw-fc gap-3 space-y-1  text-white items-center">
                 <CustomPagination
                     currentPage={currentPage}
                     handleNext={handleNextPage}
@@ -40,9 +41,16 @@ const page = () => {
                 {readManga?.chapter_image.map((item, index) => (
                     <div key={index} style={{
                         backgroundImage: `url('${readMangaData?.data?.domain_cdn}/${readManga.chapter_path}/${item.image_file}')`,
-                        backgroundSize: 'contain',
-                    }} className="h-[34rem] w-[30rem] bg-no-repeat "></div>
+                        backgroundSize: 'cover',
+                    }} className="sm:h-[34rem] w-full  max-sm:mx-auto max-sm:h-72 bg-no-repeat "></div>
                 ))}
+                <CustomPagination
+                    currentPage={currentPage}
+                    handleNext={handleNextPage}
+                    handlePageChange={handlePageChange}
+                    handlePrev={handlePreviousPage}
+                    totalPages={totalPages}
+                />
             </div>
         </div>
     )

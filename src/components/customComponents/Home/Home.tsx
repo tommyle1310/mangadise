@@ -13,13 +13,14 @@ import usePagination, { renderPageNumbers } from '@/hooks/usePagination'
 import useFetchMangasByType from '@/hooks/useFetchMangasByType'
 import CustomPagination from '../customPagination'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 
 const Home = () => {
     const { isLoading, mangas } = useFetchHomePage()
     const { categories } = useFetchCategories()
     const { mangas: NewMangas, isLoading: isLoadingNewMangas } = useFetchMangasByType('truyen-moi')
-
+    const router = useRouter()
 
     const {
         currentItems: categoriesCurrentItems,
@@ -37,7 +38,12 @@ const Home = () => {
         handleNextPage: newMangasHandleNextChange,
         handlePreviousPage: newMangasHandlePreviousChange,
     } = usePagination(NewMangas, 5);
+    useEffect(() => {
+        if (window.innerWidth < 1000) {
+            return router.push('/discover')
+        }
 
+    }, [window.innerWidth])
 
     if (isLoading) return (
         <div className='tw-fc w-full  pt-2'>
@@ -112,9 +118,12 @@ const Home = () => {
             }]} type='POPULAR_THIS_MONTH' /> */}
         </div>
     )
+
+
+
     return (
-        <div className='tw-fc w-full  pt-2'>
-            <div className="px-10">
+        <div className='tw-fc  w-full  pt-2'>
+            <div className="px-10 max-sm:hidden">
                 <div className="tw-jb ">
                     <h3 className='tw-lg-b'>Out now</h3>
                     <div className="gap-1 tw-ic">

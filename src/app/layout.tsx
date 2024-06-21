@@ -25,10 +25,10 @@ export default function RootLayout({
           <StoreProvider>
             <NavBar />
             <div className="relative flex">
-              <div className="fixed top-0 left-0 bg-subSecondary h-full py-4 tw-cc border-r-2 border-primary px-10">
+              <div className="sm:fixed hidden top-0 left-0 bg-subSecondary h-full py-4 tw-cc sm:border-r-2 border-primary sm:px-10">
                 <Mainsidebar />
               </div>
-              <div className="ml-64 flex-1 mt-20">
+              <div className="sm:ml-64  flex-1 mt-20">
                 {children}
               </div>
             </div>

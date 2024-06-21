@@ -10,7 +10,7 @@ const CustomPagination = ({ totalPages, currentPage, handleNext, handlePrev, han
                 <PaginationItem>
                     <PaginationPrevious className='cursor-pointer' onClick={handlePrev} />
                 </PaginationItem>
-                <PaginationItem className=''>
+                <PaginationItem className='max-sm:hidden sm:block'>
                     {renderPageNumbers({ totalPages: totalPages, currentPage: currentPage, handlePageChange: handlePageChange })}
                 </PaginationItem>
                 <PaginationItem>

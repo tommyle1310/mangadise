@@ -66,6 +66,10 @@
   @apply flex items-center;
 }
 
+.tw-xs-sb {
+  @apply font-semibold text-xs
+}
+
 .tw-sm-sb {
   @apply font-semibold text-sm
 }
@@ -88,6 +92,14 @@
 
 .tw-3xl-sb {
   @apply font-semibold text-3xl
+}
+
+.tw-txt-sm-mobile {
+  @apply text-[8px]
+}
+
+.tw-xs-b {
+  @apply font-bold text-xs
 }
 
 .tw-sm-b {
