@@ -14,7 +14,7 @@ const MainSidebar = () => {
   return (
     <div className='tw-fc gap-3 -mt-20'>
       {mainSidebarItem.map(item => (
-        <MainSidebarItem key={item.title} icon={item.icon} title={item.title} link={item.link} active={item.link === pathname} />
+        <MainSidebarItem key={item.title} icon={item.icon} title={item.title} link={item.link} active={item.link === '/' && pathname === '/' || item.link !== '/' && pathname.startsWith(item.link)} />
       ))}
     </div>
   )

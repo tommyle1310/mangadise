@@ -10,6 +10,8 @@ import { maximizeWordLimit } from '@/lib/helperFuncs'
 import { FaHeart } from 'react-icons/fa'
 import CustomPagination from './customPagination'
 import { renderPageNumbers } from '@/hooks/usePagination'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 type CategoryProps = {
     title: {
@@ -27,7 +29,16 @@ type CategoryProps = {
 }
 
 
+
 const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, currentPage, handleNext, handlePrev, handlePageChange, totalPages }) => {
+    const router = useRouter()
+    const handleGoToDetail = async (manga: IMangaProps) => {
+        // console.log(`/discover/${manga.slug}`);
+
+        router.push(`/discover/${manga.slug}`)
+        // href={`/discover/${manga.slug}`} 
+    }
+
 
     if (isLoading || !list) return (
         <div className="bg-black pb-10 text-white p-5 px-10 tw-fc gap-4">
@@ -99,33 +110,34 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                     {list.map((manga, index) => (
                         <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/5">
                             <Card>
-                                <CardContent className="flex h-[32rem] tw-fc gap-3 p-4">
-                                    <div className="flex-1 w-full" style={{
-                                        backgroundImage: `url('https://otruyenapi.com/uploads/comics/${manga.thumb_url}')`,
-                                        backgroundSize: 'cover',
-                                    }} />
-                                    <Separator />
-                                    <div className="tw-cc tw-fc gap-3">
-                                        <h4 className='text-primary text-center tw-lg-sb'>{maximizeWordLimit(manga.name, 30)}</h4>
-                                    </div>
-                                    <Separator />
-                                    <div className="tw-fc  gap-2 p-2">
-                                        {
-                                            manga?.chaptersLatest?.length > 0 ?
-                                                <div className="tw-md-sb tw-ic gap-1 p-2">
-                                                    <span className='text-subMain'> {manga.chaptersLatest[0]?.chapter_name}</span>
-                                                    <h5>Chapter</h5>
-                                                </div> :
-                                                <span className='text-subMain tw-md-sb'> No chapter available.</span>
-
-                                        }
-                                        <div className="tw-ic flex-wrap">{maximizeWordLimit(manga.category.map((item, i, arr) => i === arr.length - 1 ? `${item.name}` : ` ${item.name} -`).join(' '))}</div>
-                                        <div className="tw-ic">
-                                            <Button variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                <div onClick={() => handleGoToDetail(manga)} className='tw-hv-sd'>
+                                    <CardContent className="flex h-[32rem] tw-fc gap-3 p-4">
+                                        <div className="flex-1 w-full" style={{
+                                            backgroundImage: `url('https://otruyenapi.com/uploads/comics/${manga.thumb_url}')`,
+                                            backgroundSize: 'cover',
+                                        }} />
+                                        <Separator />
+                                        <div className="tw-cc tw-fc gap-3">
+                                            <h4 className='text-primary text-center tw-lg-sb'>{maximizeWordLimit(manga.name, 30)}</h4>
                                         </div>
+                                        <Separator />
+                                        <div className="tw-fc  gap-2 p-2">
+                                            {
+                                                manga?.chaptersLatest?.length > 0 ?
+                                                    <div className="tw-md-sb tw-ic gap-1 p-2">
+                                                        <span className='text-subMain'> {manga.chaptersLatest[0]?.chapter_name}</span>
+                                                        <h5>Chapter</h5>
+                                                    </div> :
+                                                    <span className='text-subMain tw-md-sb'> No chapter available.</span>
 
-                                    </div>
-                                </CardContent>
+                                            }
+                                            <div className="tw-ic flex-wrap">{maximizeWordLimit(manga.category.map((item, i, arr) => i === arr.length - 1 ? `${item.name}` : ` ${item.name} -`).join(' '))}</div>
+                                            <div className="tw-ic">
+                                                <Button onClick={(e) => { e.stopPropagation() }} variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </div>
                             </Card>
                         </CarouselItem>
                     ))}

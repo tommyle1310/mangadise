@@ -21,6 +21,16 @@ export interface IMangaProps {
     sub_docquyen: boolean
     thumb_url: string
     updatedAt: string
+    author: string[]
+    content: string
+    chapters: {
+        server_name: string,
+        server_data: {
+            filename: string,
+            chapter_title: string,
+            chapter_api_data: string
+        }[]
+    }[]
 }
 
 const useFetchHomePage = () => {

@@ -118,6 +118,15 @@
   @apply bg-transparent hover:text-primary
 }
 
+.tw-hv-su {
+  @apply hover:duration-200 hover:scale-105 cursor-pointer
+}
+
+.tw-hv-sd {
+  @apply hover:duration-200 hover:scale-95 cursor-pointer
+}
+
+
 /* Style the scrollbar track */
 ::-webkit-scrollbar {
   width: 10px;

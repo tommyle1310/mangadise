@@ -40,3 +40,30 @@ export const mainSidebarItem = [
         link: '/donate'
     },
 ]
+
+
+export const myListConstants = {
+    READING: 'Reading',
+    WANT_TO_READ: 'Want to read',
+    STALLED: 'Stalled',
+    DROPPED: 'Dropped',
+    WONT_READ: 'Wont read',
+}
+
+export const myListArrs = [
+    {
+        title: 'Reading'
+    },
+    {
+        title: 'Want to read'
+    },
+    {
+        title: 'Stalled'
+    },
+    {
+        title: 'Dropped'
+    },
+    {
+        title: 'Wont read'
+    },
+]

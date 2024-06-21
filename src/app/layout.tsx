@@ -21,8 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StoreProvider>
-          <div className="">
+        <div className="">
+          <StoreProvider>
             <NavBar />
             <div className="relative flex">
               <div className="fixed top-0 left-0 bg-subSecondary h-full py-4 tw-cc border-r-2 border-primary px-10">
@@ -32,8 +32,8 @@ export default function RootLayout({
                 {children}
               </div>
             </div>
-          </div>
-        </StoreProvider>
+          </StoreProvider>
+        </div>
       </body>
     </html>
   );
