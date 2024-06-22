@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 type CategoryProps = {
     title: {
         normal: string,
-        bold: string
+        bold?: string
     }
     type: string
     list: IMangaProps[]
@@ -34,7 +34,6 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
         // console.log(`/discover/${manga.slug}`);
 
         router.push(`/discover/${manga.slug}`)
-        // href={`/discover/${manga.slug}`} 
     }
 
 
@@ -107,7 +106,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                 >
                     <CarouselContent>
                         {list.map((manga, index) => (
-                            <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/4 xl:basis-1/5">
+                            <CarouselItem key={index} className="sm:basis-1/2 bg-red-300 min-w-64 w-full lg:basis-1/4 xl:basis-1/5">
                                 <Card>
                                     <div onClick={() => handleGoToDetail(manga)} className='tw-hv-sd'>
                                         <CardContent className="flex h-[32rem] tw-fc gap-3 p-4">

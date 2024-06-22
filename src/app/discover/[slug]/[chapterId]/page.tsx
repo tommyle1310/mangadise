@@ -30,7 +30,7 @@ const page = () => {
     return (
         <div className=' sm:p-4 tw-fc items-center sm:gap-4'>
             <h4 className='tw-xl-b text-primary'>{readManga?.comic_name}</h4>
-            <div className="tw-fc gap-3 space-y-1  text-white items-center">
+            <div className="tw-fc gap-3 space-y-1 max-sm:w-full max-sm: px-4 text-white items-center">
                 <CustomPagination
                     currentPage={currentPage}
                     handleNext={handleNextPage}
@@ -39,10 +39,17 @@ const page = () => {
                     totalPages={totalPages}
                 />
                 {readManga?.chapter_image.map((item, index) => (
-                    <div key={index} style={{
-                        backgroundImage: `url('${readMangaData?.data?.domain_cdn}/${readManga.chapter_path}/${item.image_file}')`,
-                        backgroundSize: 'cover',
-                    }} className="sm:h-[34rem] w-full  max-sm:mx-auto max-sm:h-72 bg-no-repeat "></div>
+                    <div
+                        key={index}
+                        className="relative sm:h-[34rem] w-full border-2 max-sm:mx-auto max-sm:h-72"
+                    >
+                        <img
+                            src={`${readMangaData?.data?.domain_cdn}/${readManga.chapter_path}/${item.image_file}`}
+                            alt="Manga Image"
+                            className="absolute top-0 left-0 w-full h-full object-fill"
+                        />
+                    </div>
+
                 ))}
                 <CustomPagination
                     currentPage={currentPage}

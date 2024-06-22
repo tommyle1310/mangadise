@@ -123,7 +123,7 @@ const Home = () => {
 
     return (
         <div className='tw-fc  w-full  pt-2'>
-            <div className="px-10 max-sm:hidden">
+            <div className="px-10 max-xl:hidden">
                 <div className="tw-jb ">
                     <h3 className='tw-lg-b'>Out now</h3>
                     <div className="gap-1 tw-ic">
@@ -135,7 +135,7 @@ const Home = () => {
                         </Button>
                     </div>
                 </div>
-                <Carousel className="max-w-[72rem] mx-auto">
+                <Carousel className="xl:max-w-[72rem] lg:max-w-[56rem] w-full mx-auto">
                     <CarouselContent>
                         {mangas?.slice(0, 5)?.map((manga, index) => (
                             <CarouselItem key={index} className=''>

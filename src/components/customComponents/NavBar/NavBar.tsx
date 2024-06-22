@@ -2,7 +2,7 @@
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Filter, Search } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Login from '../Auth/Login'
 import Signup from '../Auth/Signup'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -35,15 +35,30 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import useFetchSearch from '@/hooks/useFetchSearch'
+import { useRouter } from 'next/navigation'
 
 
 const NavBar = () => {
+    const router = useRouter()
     const [isShowUserAvatar, setIsShowUserAvatar] = useState<boolean>(true)
+
+    const { searchResultData, isLoading, searchResult, handleSearch, query, setQuery } = useFetchSearch();
+
+    useEffect(() => {
+        router.push(`/discover/search?query=${query}`)
+    }, [searchResult])
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch(query); // Trigger search when Enter key is pressed
+        }
+    };
 
     return (
         <div className="  z-10 bg-secondary w-full  fixed border-b-2 border-primary shadow-sm shadow-bottom-right shadow-primary ">
             <div className="max-w-screen-2xl mx-auto tw-jb p-4">
-                <div className="sm:hidden max-sm:block">
+                <div className="2xl:hidden max-2xl:block">
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="outline">Open</Button>
@@ -79,9 +94,15 @@ const NavBar = () => {
                 </div>
                 <div className="p-3 bg-destructive">Managadise</div>
                 <div className="flex gap-3 ">
-                    <Label htmlFor='search-input' className="py-3 px-5 max-sm:hidden rounded-full shadow-md shadow-bottom-right shadow-primary gap-3 flex items-center border ">
+                    <Label htmlFor='search-input' className="py-3 px-5 max-2xl:hidden rounded-full shadow-md shadow-bottom-right shadow-primary gap-3 flex items-center border ">
                         <Search />
-                        <input id='search-input' className='border-none focus:ring-0  outline-none bg-transparent' />
+                        <input
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            id='search-input'
+                            className='border-none focus:ring-0 outline-none bg-transparent'
+                        />
                         <Separator orientation="vertical" />
                         <Filter />
                     </Label>

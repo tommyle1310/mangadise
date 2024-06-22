@@ -25,10 +25,10 @@ const useFetchReadManga = (chapterId: string) => {
             setIsLoading(true); // Set loading state to true when fetching starts
             try {
                 const result = await axios.get(`https://sv1.otruyencdn.com/v1/api/chapter/${chapterId}`);
-                console.log(chapterId);
+                // console.log(chapterId);
 
                 setData(result.data); // Update state with the data from the response
-                console.log(result.data);
+                // console.log(result.data);
 
                 setReadManga(result.data?.data?.item);
             } catch (error) {
