@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from '@/lib/axios'; // Adjust the import path as needed
 import { IMangaProps } from './useFetchHomePage';
+import { useRouter } from 'next/navigation';
 
 // Debounce function
 const debounce = <F extends (...args: any[]) => any>(func: F, delay: number) => {
@@ -23,7 +24,7 @@ const useFetchSearch = ({ initialQuery }: UseFetchSearchProps = {}) => {
     const [isLoading, setIsLoading] = useState<boolean>(false); // State to track loading status
     const [searchResult, setSearchResult] = useState<IMangaProps[]>();
     const [query, setQuery] = useState<string>(initialQuery || ''); // State to store the query
-
+    const router = useRouter()
     const fetchSearchResult = async (searchQuery: string) => {
         setIsLoading(true); // Set loading state to true when fetching starts
         try {
@@ -50,6 +51,8 @@ const useFetchSearch = ({ initialQuery }: UseFetchSearchProps = {}) => {
     const handleSearch = (searchQuery: string) => {
         setQuery(searchQuery); // Update query state with the new search term
         debouncedFetchSearchResult(searchQuery); // Trigger the debounced search function
+        router.push(`/discover/search?query=${query}`)
+
     };
 
     // Use useCallback to memoize the debounced function

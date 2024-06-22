@@ -21,6 +21,7 @@ const Home = () => {
     const { categories } = useFetchCategories()
     const { mangas: NewMangas, isLoading: isLoadingNewMangas } = useFetchMangasByType('truyen-moi')
     const router = useRouter()
+    console.log('mangas', mangas);
 
     const {
         currentItems: categoriesCurrentItems,
@@ -39,7 +40,7 @@ const Home = () => {
         handlePreviousPage: newMangasHandlePreviousChange,
     } = usePagination(NewMangas, 5);
     useEffect(() => {
-        if (window.innerWidth < 1000) {
+        if (window.innerWidth < 1200) {
             return router.push('/discover')
         }
 
@@ -123,7 +124,7 @@ const Home = () => {
 
     return (
         <div className='tw-fc  w-full  pt-2'>
-            <div className="px-10 max-xl:hidden">
+            <div className="px-10 max-lg:hidden">
                 <div className="tw-jb ">
                     <h3 className='tw-lg-b'>Out now</h3>
                     <div className="gap-1 tw-ic">
@@ -182,10 +183,15 @@ const Home = () => {
                                                 <Button variant={'outline'} className='text-white hover:text-primary bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive' />Save</Button>
                                             </div>
                                             <div className="tw-ic">
-                                                <div className='bg-white  px-3 py-2 rounded-lg relative'>
-                                                    <span className='text-muted-foreground'>Latest EP: </span>
-                                                    <span className='text-subMain'>{manga.chaptersLatest[0].chapter_name}</span>
-                                                </div>
+                                                {manga?.chaptersLatest
+                                                    ?
+                                                    <div className='bg-white  px-3 py-2 rounded-lg relative'>
+                                                        <span className='text-muted-foreground'>Latest EP: </span>
+                                                        <span className='text-subMain'>{manga?.chaptersLatest[0]?.chapter_name}</span>
+                                                    </div>
+                                                    :
+                                                    <span className='text-subMain bg-white  px-3 py-2 rounded-lg relative'>No chapter available</span>
+                                                }
                                             </div>
                                         </div>
                                     </CardContent>

@@ -1,7 +1,7 @@
 'use client'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { Filter, Search } from 'lucide-react'
+import { Filter, Menu, Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import Login from '../Auth/Login'
 import Signup from '../Auth/Signup'
@@ -34,20 +34,18 @@ import {
 } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import useFetchSearch from '@/hooks/useFetchSearch'
-import { useRouter } from 'next/navigation'
+import MainSidebarItem from '../MainSidebar/MainSidebarItem'
+import { mainSidebarItemMobile } from '@/lib/constants'
+import { usePathname } from 'next/navigation'
 
 
 const NavBar = () => {
-    const router = useRouter()
     const [isShowUserAvatar, setIsShowUserAvatar] = useState<boolean>(true)
+    const pathname = usePathname()
 
-    const { searchResultData, isLoading, searchResult, handleSearch, query, setQuery } = useFetchSearch();
 
-    useEffect(() => {
-        router.push(`/discover/search?query=${query}`)
-    }, [searchResult])
+    const { handleSearch, query, setQuery } = useFetchSearch();
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -59,30 +57,35 @@ const NavBar = () => {
         <div className="  z-10 bg-secondary w-full  fixed border-b-2 border-primary shadow-sm shadow-bottom-right shadow-primary ">
             <div className="max-w-screen-2xl mx-auto tw-jb p-4">
                 <div className="2xl:hidden max-2xl:block">
-                    <Sheet>
+                    <Sheet >
                         <SheetTrigger asChild>
-                            <Button variant="outline">Open</Button>
+                            <Button variant="outline"> <Menu /></Button>
                         </SheetTrigger>
-                        <SheetContent side='left'>
+                        <SheetContent className='max-sm:w-[90%]' side='left'>
                             <SheetHeader>
-                                <SheetTitle>Edit profile</SheetTitle>
-                                <SheetDescription>
-                                    Make changes to your profile here. Click save when you're done.
+                                <SheetTitle className='text-primary'>Mangadise</SheetTitle>
+                                <SheetDescription className='max-sm:hidden'>
+                                    Explore world of manga with the best quality in Vietnamese.
                                 </SheetDescription>
                             </SheetHeader>
                             <div className="grid gap-4 py-4">
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label htmlFor="name" className="text-right">
-                                        Name
-                                    </Label>
-                                    <Input id="name" className="col-span-3" />
-                                </div>
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label htmlFor="username" className="text-right">
-                                        Username
-                                    </Label>
-                                    <Input id="username" className="col-span-3" />
-                                </div>
+                                <Label htmlFor='search-input' className=" w-full  px-2 py-1 max-sm:py-3 tw-jb 2xl:hidden rounded-full shadow-md shadow-bottom-right shadow-primary max-sm:gap-1 gap-3 flex items-center border ">
+                                    <Search className='max-sm:hidden' />
+                                    <input
+                                        value={query}
+                                        onChange={(e) => setQuery(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                        id='search-input'
+                                        className='border-none focus:ring-0 outline-none bg-transparent'
+                                    />
+                                    <div className="max-sm:hidden max-sm:text-xs">
+                                        <Button className=' text-primary' onClick={() => handleSearch(query)} variant={'outline'}>Search</Button>
+                                    </div>
+                                    <Search className='sm:hidden size-4 text-primary' />
+                                </Label>
+                                {mainSidebarItemMobile.map(item => (
+                                    <MainSidebarItem key={item.title} icon={item.icon} title={item.title} link={item.link} active={item.link === '/' && pathname === '/' || item.link !== '/' && pathname.startsWith(item.link)} />
+                                ))}
                             </div>
                             <SheetFooter>
                                 <SheetClose asChild>
@@ -92,6 +95,8 @@ const NavBar = () => {
                         </SheetContent>
                     </Sheet>
                 </div>
+
+
                 <div className="p-3 bg-destructive">Managadise</div>
                 <div className="flex gap-3 ">
                     <Label htmlFor='search-input' className="py-3 px-5 max-2xl:hidden rounded-full shadow-md shadow-bottom-right shadow-primary gap-3 flex items-center border ">

@@ -97,7 +97,8 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                     </Button>
                 </div>
             </div>
-            <div className="max-sm:hidden">
+
+            <div className="max-xl:hidden">
                 <Carousel
                     opts={{
                         align: "start",
@@ -106,7 +107,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                 >
                     <CarouselContent>
                         {list.map((manga, index) => (
-                            <CarouselItem key={index} className="sm:basis-1/2 bg-red-300 min-w-64 w-full lg:basis-1/4 xl:basis-1/5">
+                            <CarouselItem key={index} className=" min-w-64 w-full xl:basis-1/5">
                                 <Card>
                                     <div onClick={() => handleGoToDetail(manga)} className='tw-hv-sd'>
                                         <CardContent className="flex h-[32rem] tw-fc gap-3 p-4">
@@ -142,7 +143,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                     </CarouselContent>
                 </Carousel>
             </div>
-            <div className="sm:hidden max-sm:gap-4 max-sm:grid grid-cols-2">
+            <div className="xl:hidden max-xl:gap-4 max-xl:grid grid-cols-2 lg:grid-cols-3">
                 {list.map((manga, index) => (
                     <Card key={index} className='w-full mx-auto '>
                         <div onClick={() => handleGoToDetail(manga)} className='tw-hv-sd '>
@@ -162,7 +163,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                                                 <span className='text-subMain max-sm:text-[10px]'> {maximizeWordLimit(manga.chaptersLatest[0]?.chapter_name, 10)}</span>
                                                 <h5>Chapter</h5>
                                             </div> :
-                                            <span className='text-subMain tw-md-sb max-sm:tw-xs-sb'> No chapter available.</span>
+                                            <span className='text-subMain tw-md-sb max-sm:text-[10px] p-2 leading-4 '> No chapter available.</span>
 
                                     }
                                     <div className="tw-ic max-sm:hidden flex-wrap">{maximizeWordLimit(manga.category.map((item, i, arr) => i === arr.length - 1 ? `${item.name}` : ` ${item.name} -`).join(' '))}</div>
