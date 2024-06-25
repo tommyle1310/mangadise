@@ -10,9 +10,14 @@ export const mainSidebarItem = [
         link: '/discover'
     },
     {
+        title: 'Find Categories',
+        icon: 'GalleryVerticalEnd',
+        link: '/categories'
+    },
+    {
         title: 'Authors',
         icon: 'Users',
-        link: '/authors'
+        link: '/authors',
 
     },
     {
@@ -45,6 +50,11 @@ export const mainSidebarItemMobile = [
         title: 'Discover Manga',
         icon: 'Blocks',
         link: '/discover'
+    },
+    {
+        title: 'Find Categories',
+        icon: 'GalleryVerticalEnd',
+        link: '/categories'
     },
     {
         title: 'Authors',

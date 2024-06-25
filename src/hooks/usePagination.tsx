@@ -2,7 +2,13 @@ import { PaginationEllipsis, PaginationLink } from '@/components/ui/pagination';
 import { useState, useEffect } from 'react';
 
 const usePagination = (items: any[] = [], itemsPerPage = 5, defaultCurrentPage = 1, type?: 'READ_MANGA', slug?: string) => {
-    const [currentPage, setCurrentPage] = useState(defaultCurrentPage);
+    const initialPageFromUrl = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page');
+        return pageParam ? parseInt(pageParam, 10) : defaultCurrentPage;
+    };
+
+    const [currentPage, setCurrentPage] = useState(initialPageFromUrl());
     const [firstChapterApiData, setFirstChapterApiData] = useState<string | null>(null);
 
     // Calculate total pages
@@ -12,7 +18,6 @@ const usePagination = (items: any[] = [], itemsPerPage = 5, defaultCurrentPage =
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
-
 
     // Handle async fetching of first chapter api data
     useEffect(() => {
@@ -28,14 +33,15 @@ const usePagination = (items: any[] = [], itemsPerPage = 5, defaultCurrentPage =
 
     // Effect to update router when firstChapterApiData changes
     useEffect(() => {
-        if (type === 'READ_MANGA' && firstChapterApiData && slug && defaultCurrentPage !== 1) {
+        if (type === 'READ_MANGA' && firstChapterApiData && slug) {
+            console.log('log vao', firstChapterApiData);
 
-            const newUrl = `/discover/${slug}/${firstChapterApiData}&${defaultCurrentPage}`;
-            if (window.location.pathname !== newUrl) {
+            const newUrl = `/discover/${slug}/${firstChapterApiData}&${currentPage}`;
+            if (window.location.pathname + window.location.search !== newUrl) {
                 window.history.pushState({}, '', newUrl); // Update browser history without refreshing
             }
         }
-    }, [firstChapterApiData, slug, type]);
+    }, [firstChapterApiData, slug, type, currentPage]);
 
     // Change page
     const handlePageChange = (pageNumber: number) => {

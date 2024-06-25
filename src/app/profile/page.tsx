@@ -12,7 +12,7 @@ const page = () => {
 
 
     return (
-        <NotSupportPage feature='Authors' />
+        <NotSupportPage feature='Profile' />
     )
 }
 

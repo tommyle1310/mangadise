@@ -88,14 +88,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
         <div className="bg-black pb-10 text-white p-5 sm:px-10 tw-fc gap-4">
             <div className="tw-jb ">
                 <h3 className='tw-lg-b gap-1 tw-ic'>{title.normal}<span className='text-destructive'>{title.bold}</span> </h3>
-                <div className="gap-1 sm:tw-ic max-sm:hidden">
-                    <Button variant="outline" size="icon">
-                        <ChevronLeft className="h-4 w-4 text-primary" />
-                    </Button>
-                    <Button variant="outline" size="icon">
-                        <ChevronRight className="h-4 w-4 text-primary" />
-                    </Button>
-                </div>
+
             </div>
 
             <div className="max-xl:hidden">

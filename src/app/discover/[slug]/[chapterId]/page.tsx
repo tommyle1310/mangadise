@@ -7,7 +7,6 @@ import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 const page = () => {
-    const router = useRouter()
     const params = useParams()
     const { chapterId, slug } = params
     let chapterNum = 1
@@ -24,6 +23,7 @@ const page = () => {
     const chaptedID = currentItems[0]?.chapter_api_data.substring('https://sv1.otruyencdn.com/v1/api/chapter/'.length)
     const { readManga, readMangaData } = useFetchReadManga(chaptedID)
     console.log(chaptedID);
+
 
 
 
@@ -46,7 +46,7 @@ const page = () => {
                         <img
                             src={`${readMangaData?.data?.domain_cdn}/${readManga.chapter_path}/${item.image_file}`}
                             alt="Manga Image"
-                            className="absolute top-0 left-0 w-full h-full object-fill"
+                            className="absolute top-0 left-0 w-full h-full object-contain"
                         />
                     </div>
 

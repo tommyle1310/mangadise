@@ -54,7 +54,7 @@ const NavBar = () => {
     };
 
     return (
-        <div className="  z-10 bg-secondary w-full  fixed border-b-2 border-primary shadow-sm shadow-bottom-right shadow-primary ">
+        <div className="  z-20 bg-secondary w-full  fixed border-b-2 border-primary shadow-sm shadow-bottom-right shadow-primary ">
             <div className="max-w-screen-2xl mx-auto tw-jb p-4">
                 <div className="2xl:hidden max-2xl:block">
                     <Sheet >
