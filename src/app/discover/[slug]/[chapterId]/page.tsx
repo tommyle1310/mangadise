@@ -3,10 +3,13 @@ import CustomPagination from '@/components/customComponents/customPagination'
 import useFetchDetailManga from '@/hooks/useFetchDetailManga'
 import useFetchReadManga from '@/hooks/useFetchReadManga'
 import usePagination from '@/hooks/usePagination'
+import { RootState } from '@/lib/store'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const page = () => {
+    const user = useSelector((state: RootState) => state.auth.auth)
     const params = useParams()
     const { chapterId, slug } = params
     let chapterNum = 1
@@ -22,7 +25,29 @@ const page = () => {
     const { currentItems, currentPage, handleNextPage, handlePageChange, handlePreviousPage, totalPages } = usePagination(paginationReadManga, 1, chapterNum, 'READ_MANGA', slug.toString())
     const chaptedID = currentItems[0]?.chapter_api_data.substring('https://sv1.otruyencdn.com/v1/api/chapter/'.length)
     const { readManga, readMangaData } = useFetchReadManga(chaptedID)
-    console.log(chaptedID);
+
+    useEffect(() => {
+        if (chapterId && detailManga && currentPage && user.email !== '' && slug) {
+            console.log('chaptedID', chaptedID, 'detailManga', detailManga, 'cu', currentPage);
+            const fetchManga = async () => {
+                const response = await fetch('/api/history/new', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ owner: user.email, chapterNum: currentPage, chapterId: chaptedID, slug })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                console.log(data);
+            }
+            fetchManga()
+        }
+    }, [chaptedID, detailManga, currentPage, user, slug])
 
 
 

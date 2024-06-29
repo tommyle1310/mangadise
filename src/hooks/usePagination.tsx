@@ -34,7 +34,6 @@ const usePagination = (items: any[] = [], itemsPerPage = 5, defaultCurrentPage =
     // Effect to update router when firstChapterApiData changes
     useEffect(() => {
         if (type === 'READ_MANGA' && firstChapterApiData && slug) {
-            console.log('log vao', firstChapterApiData);
 
             const newUrl = `/discover/${slug}/${firstChapterApiData}&${currentPage}`;
             if (window.location.pathname + window.location.search !== newUrl) {

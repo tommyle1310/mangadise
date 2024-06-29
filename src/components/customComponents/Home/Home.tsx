@@ -23,6 +23,16 @@ const Home = () => {
     const { mangas: NewMangas, isLoading: isLoadingNewMangas } = useFetchMangasByType('truyen-moi')
     const router = useRouter()
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch('/api/user')
+            const data = await response.json()
+            console.log(data);
+
+        }
+        fetchUser()
+    }, [])
+
     const {
         currentItems: categoriesCurrentItems,
         currentPage: categoriesCurrentPage,

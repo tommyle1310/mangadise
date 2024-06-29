@@ -12,7 +12,6 @@ const page = () => {
 
     const { searchResultData, isLoading, searchResult, handleSearch, setQuery, query } = useFetchSearch({ initialQuery: search?.toString() });
 
-    console.log(searchResult);
     const {
         currentItems,
         currentPage,

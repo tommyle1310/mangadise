@@ -38,11 +38,39 @@ import useFetchSearch from '@/hooks/useFetchSearch'
 import MainSidebarItem from '../MainSidebar/MainSidebarItem'
 import { mainSidebarItemMobile } from '@/lib/constants'
 import { usePathname } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/lib/store'
+import { signOut, useSession } from 'next-auth/react'
+import { signOut as logOut } from '../../../lib/features/auth/authSlice'
+import { handleLogin } from '@/lib/authOptions'
 
 
 const NavBar = () => {
-    const [isShowUserAvatar, setIsShowUserAvatar] = useState<boolean>(true)
+    const { data: session } = useSession()
+    const dispatch = useDispatch()
+
+    const [isShowUserAvatar, setIsShowUserAvatar] = useState<boolean>(false)
     const pathname = usePathname()
+    const user = useSelector((state: RootState) => state.auth.auth)
+
+    useEffect(() => {
+        if (!user.avatar || !user.email || !user.name) {
+            setIsShowUserAvatar(false)
+        } else {
+            setIsShowUserAvatar(true)
+        }
+
+    }, [user])
+
+    useEffect(() => {
+
+        // If session exists and is valid, log the user in
+        if (!session?.user) {
+            dispatch(logOut());
+        }
+        else if (session?.user?.name && session?.user?.email && session?.user?.image)
+            handleLogin(user);
+    }, [session]);
 
 
     const { handleSearch, query, setQuery } = useFetchSearch();
@@ -115,7 +143,7 @@ const NavBar = () => {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarImage src={user?.avatar} />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
                             </DropdownMenuTrigger>
@@ -193,7 +221,7 @@ const NavBar = () => {
                                     <span>API</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
                                     <LogOut className="mr-2 h-4 w-4" />
                                     <span>Log out</span>
                                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

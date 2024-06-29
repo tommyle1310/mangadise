@@ -4,6 +4,7 @@ import "./globals.css";
 import Mainsidebar from "@/components/customComponents/MainSidebar/MainSidebar";
 import NavBar from "@/components/customComponents/NavBar/NavBar";
 import StoreProvider from "./Provider";
+import SessionWrapper from "@/components/SessionWrapper";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,22 +20,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="">
-          <StoreProvider>
-            <NavBar />
-            <div className="relative flex">
-              <div className="2xl:fixed hidden top-0 left-0 bg-subSecondary h-full py-4 tw-cc 2xl:border-r-2 border-primary 2xl:px-10">
-                <Mainsidebar />
+    <SessionWrapper>
+      <html lang="en">
+        <body className={inter.className}>
+          <div className="">
+            <StoreProvider>
+              <NavBar />
+              <div className="relative flex">
+                <div className="2xl:fixed hidden top-0 left-0 bg-subSecondary h-full py-4 tw-cc 2xl:border-r-2 border-primary 2xl:px-10">
+                  <Mainsidebar />
+                </div>
+                <div className="2xl:ml-64  flex-1 mt-20">
+                  {children}
+                </div>
               </div>
-              <div className="2xl:ml-64  flex-1 mt-20">
-                {children}
-              </div>
-            </div>
-          </StoreProvider>
-        </div>
-      </body>
-    </html>
+            </StoreProvider>
+          </div>
+        </body>
+      </html>
+    </SessionWrapper>
+
   );
 }
