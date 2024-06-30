@@ -40,12 +40,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ altBtn, btn, title }) => {
 
     useEffect(() => {
         // If session exists and is valid, log the user in
-        if (session?.user) {
-            const name = session?.user?.name || ''
-            const email = session?.user?.email || ''
-            const image = session?.user?.image || ''
-            dispatch(logIn({ name, email, image }));
+        if (session?.user?.name && session?.user?.email && session?.user?.image) {
+            if (session?.user?.name != null && session?.user?.email != null && session?.user?.image != null) {
+                const name = session.user.name;
+                const email = session.user.email;
+                const image = session.user.image;
+
+                dispatch(logIn({ name, email, image }));
+            }
         }
+
     }, [session]);
 
 

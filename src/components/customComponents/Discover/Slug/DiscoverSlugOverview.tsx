@@ -9,8 +9,27 @@ import { Button } from "@/components/ui/button"
 import { myListArrs } from '@/lib/constants'
 import { IMangaProps } from '@/hooks/useFetchHomePage'
 import { useRouter } from 'next/navigation'
+import { RootState } from '@/lib/store'
+import { useSelector } from 'react-redux'
 
 const DiscoverSlugOverview = ({ detailManga }: { detailManga: IMangaProps }) => {
+    console.log(detailManga);
+    const user = useSelector((state: RootState) => state.auth.auth)
+
+    const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
+        const response = await fetch('/api/my-list/update', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                type,
+                owner: user.email,
+                slug: manga.slug
+            })
+        });
+    }
+
     const router = useRouter()
     return (
         <TabsContent value="overview" className='sm:grid grid-cols-5 w-full sm:p-4 gap-4 max-sm:tw-fc'>
@@ -32,8 +51,8 @@ const DiscoverSlugOverview = ({ detailManga }: { detailManga: IMangaProps }) => 
                 <div className="tw-fc gap-1">
                     <p className='tw-lg-sb'>My List</p>
                     <div className="tw-ic flex-wrap max-sm:gap-2 sm:gap-4">
-                        {myListArrs?.map(item => (
-                            <Button key={item.title} variant={'outline'} className=''>{item.title}</Button>
+                        {myListArrs?.slice(2)?.map(item => (
+                            <Button key={item.title} variant={'outline'} onClick={() => handleSaveToMyList(item.title, detailManga)} className=''>{item.title}</Button>
                         ))}
                     </div>
                 </div>

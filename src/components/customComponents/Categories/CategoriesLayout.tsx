@@ -31,9 +31,9 @@ const CategoriesLayoutComponent = () => {
         handlePreviousPage: newMangasHandlePreviousChange,
     } = usePagination(NewMangas, 5);
     return (
-        <div className='mx-auto max-w-screen-xl'>
+        <div className='mx-auto max-w-screen-xl '>
             <div className="tw-jb ">
-                <h3 className='tw-lg-b'><span className='text-destructive'>Hot</span> Categories</h3>
+                <h3 className='tw-lg-b p-4'><span className='text-destructive'>Hot</span> Categories</h3>
                 <div className="gap-1 tw-ic">
                     <Button variant="outline" size="icon" onClick={categoriesHandlePreviousChange}>
                         <ChevronLeft className="h-4 w-4" />

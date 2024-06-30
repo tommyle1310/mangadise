@@ -1,7 +1,7 @@
 import { Schema, model, models, Model, ObjectId, Document } from 'mongoose';
 
 export type historyType = {
-    manga: string, chapterNum: number, chapterId: string, date: Date
+    manga: string, chapterNum: number, chapterId: string, date: Date, slug: string, poster: string
 }
 
 
@@ -20,6 +20,8 @@ const HistorySchema = new Schema<HistoryDocument>({
     last: {
         manga: { type: String },
         chapterNum: Number,
+        slug: String,
+        poster: String,
         chapterId: { type: String, required: true },
         date: {
             type: Date,
@@ -30,6 +32,8 @@ const HistorySchema = new Schema<HistoryDocument>({
         type: [{
             manga: { type: String },
             chapterNum: Number,
+            slug: String,
+            poster: String,
             chapterId: { type: String, required: true },
             date: {
                 type: Date,

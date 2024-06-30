@@ -8,7 +8,6 @@ import React from 'react'
 const page = () => {
     const params = useParams()
     const { categories: mangas, isLoading } = useFetchCategories(params?.slug.toString())
-    console.log(params, mangas);
     const {
         currentItems: categoriesCurrentItems,
         currentPage: categoriesCurrentPage,

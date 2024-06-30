@@ -63,13 +63,17 @@ const NavBar = () => {
     }, [user])
 
     useEffect(() => {
-
         // If session exists and is valid, log the user in
         if (!session?.user) {
             dispatch(logOut());
-        }
-        else if (session?.user?.name && session?.user?.email && session?.user?.image)
+        } else if (session.user.name != null && session.user.email != null && session.user.image != null) {
+            const user = {
+                name: session.user.name,
+                email: session.user.email,
+                avatar: session.user.image,
+            };
             handleLogin(user);
+        }
     }, [session]);
 
 

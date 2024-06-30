@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface AuthState {
-    email: string;
-    name: string;
+    email: string | null;
+    name: string | null;
     avatar: string;
 }
 
 const initialState: AuthState = {
-    email: '',
-    name: '',
+    email: null,
+    name: null,
     avatar: '',
 };
 
@@ -16,15 +16,15 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        signIn: (state, action: PayloadAction<{ name: string, email: string, image: string }>) => {
+        signIn: (state, action: PayloadAction<{ name: string | null, email: string | null, image: string }>) => {
             state.email = action.payload.email;
             state.avatar = action.payload.image; // Assuming avatar represents image
             state.name = action.payload.name; // Update name in state
         },
         signOut: (state) => {
-            state.email = '';
+            state.email = null;
             state.avatar = ''; // Assuming avatar represents image
-            state.name = ''; // Update name in state
+            state.name = null; // Update name in state
         },
     },
 });

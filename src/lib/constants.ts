@@ -91,6 +91,7 @@ export const mainSidebarItemMobile = [
 
 export const myListConstants = {
     READING: 'Reading',
+    HISTORY: 'History',
     WANT_TO_READ: 'Want to read',
     STALLED: 'Stalled',
     DROPPED: 'Dropped',
@@ -100,6 +101,9 @@ export const myListConstants = {
 export const myListArrs = [
     {
         title: 'Reading'
+    },
+    {
+        title: 'History',
     },
     {
         title: 'Want to read'

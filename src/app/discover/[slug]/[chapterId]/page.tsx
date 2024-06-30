@@ -28,9 +28,8 @@ const page = () => {
 
     useEffect(() => {
         if (chapterId && detailManga && currentPage && user.email !== '' && slug) {
-            console.log('chaptedID', chaptedID, 'detailManga', detailManga, 'cu', currentPage);
             const fetchManga = async () => {
-                const response = await fetch('/api/history/new', {
+                const response = await fetch('/api/history/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -71,7 +70,7 @@ const page = () => {
                         <img
                             src={`${readMangaData?.data?.domain_cdn}/${readManga.chapter_path}/${item.image_file}`}
                             alt="Manga Image"
-                            className="absolute top-0 left-0 w-full h-full object-contain"
+                            className="absolute top-0 left-0 w-full h-full max-sm:object-fill object-contain"
                         />
                     </div>
 

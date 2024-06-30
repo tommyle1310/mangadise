@@ -10,6 +10,19 @@ import { maximizeWordLimit } from '@/lib/helperFuncs'
 import { FaHeart } from 'react-icons/fa'
 import CustomPagination from './customPagination'
 import { useRouter } from 'next/navigation'
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { myListArrs } from '@/lib/constants'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/lib/store'
 
 type CategoryProps = {
     title: {
@@ -35,7 +48,21 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
 
         router.push(`/discover/${manga.slug}`)
     }
+    const user = useSelector((state: RootState) => state.auth.auth)
 
+    const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
+        const response = await fetch('/api/my-list/update', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                type,
+                owner: user.email,
+                slug: manga.slug
+            })
+        });
+    }
 
     if (isLoading || !list) return (
         <div className="bg-black pb-10 text-white p-5 px-10 tw-fc gap-4">
@@ -138,30 +165,52 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
             </div>
             <div className="xl:hidden max-xl:gap-4 max-xl:grid grid-cols-2 lg:grid-cols-3">
                 {list.map((manga, index) => (
-                    <Card key={index} className='w-full mx-auto '>
+                    <Card key={index} className='w-full mx-auto overflow-hidden shadow-md shadow-primary'>
                         <div onClick={() => handleGoToDetail(manga)} className='tw-hv-sd '>
-                            <CardContent className="flex sm:h-[32rem] tw-fc gap-3 sm:p-4 max-sm:p-0  ">
+                            <CardContent className="flex sm:h-[32rem] tw-fc gap-2 sm:p-4 max-sm:p-0  ">
                                 <div className="flex-1 w-full aspect-square" style={{
                                     backgroundImage: `url('https://otruyenapi.com/uploads/comics/${manga.thumb_url}')`,
                                     backgroundSize: 'cover',
                                 }} />
                                 <Separator className='max-sm:hidden ' />
-                                <h4 className='text-primary text-center tw-lg-sb max-sm:text-[12px] max-sm:leading-4'>{maximizeWordLimit(manga.name, 16)}</h4>
+                                <h4 className='text-primary p-3 leading-4 tw-lg-sb text-sm'>{maximizeWordLimit(manga.name, 30)}</h4>
 
                                 <Separator className='max-sm:hidden' />
                                 <div className="tw-fc  gap-2 sm:p-2">
                                     {
                                         manga?.chaptersLatest?.length > 0 ?
-                                            <div className="tw-md-sb tw-ic gap-1 p-2 max-sm:text-[10px]">
-                                                <span className='text-subMain max-sm:text-[10px]'> {maximizeWordLimit(manga.chaptersLatest[0]?.chapter_name, 10)}</span>
+                                            <div className="tw-md-sb tw-ic gap-1 px-3 pb-3 text-xs">
+                                                <span className='text-subMain '> {maximizeWordLimit(manga.chaptersLatest[0]?.chapter_name, 10)}</span>
                                                 <h5>Chapter</h5>
                                             </div> :
-                                            <span className='text-subMain tw-md-sb max-sm:text-[10px] p-2 leading-4 '> No chapter available.</span>
+                                            <span className='text-subMain tw-md-sb text-xs p-2 leading-4 '> No chapter available.</span>
 
                                     }
                                     <div className="tw-ic max-sm:hidden flex-wrap">{maximizeWordLimit(manga.category.map((item, i, arr) => i === arr.length - 1 ? `${item.name}` : ` ${item.name} -`).join(' '))}</div>
-                                    <div className="tw-ic max-sm:hidden">
-                                        <Button onClick={(e) => { e.stopPropagation() }} variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                    <div className="tw-ic max-sm:hidden ">
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button onClick={(e) => { e.stopPropagation() }} variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                            </DialogTrigger>
+                                            <DialogContent>
+                                                <DialogHeader className='gap-4 max-md:gap-2 tw-fc z-50'>
+                                                    <DialogTitle className='text-center tw-3xl-b'><span className='text-primary'>Mangadise</span></DialogTitle>
+                                                    <DialogDescription className='text-center'>
+                                                        Where do you want to save this manga?
+                                                    </DialogDescription>
+                                                    <Separator></Separator>
+                                                    <RadioGroup className='grid grid-cols-2 gap-2'>
+                                                        {myListArrs.slice(2).map(item => (
+                                                            <div key={item.title} className=" space-x-2">
+                                                                <RadioGroupItem onClick={(e) => { e.stopPropagation(); handleSaveToMyList(item.title, manga) }} value={item.title} id={item.title} />
+                                                                <Label htmlFor={item.title}>{item.title}</Label>
+                                                            </div>
+                                                        ))}
+                                                    </RadioGroup>
+
+                                                </DialogHeader>
+                                            </DialogContent>
+                                        </Dialog>
                                     </div>
                                 </div>
                             </CardContent>
