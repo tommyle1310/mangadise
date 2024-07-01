@@ -62,6 +62,8 @@ const NavBar = () => {
         }
 
     }, [user])
+    console.log('check data', session);
+
 
     useEffect(() => {
         // If session exists and is valid, log the user in
