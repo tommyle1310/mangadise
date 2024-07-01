@@ -1,7 +1,8 @@
-import { IMyList } from "@/app/my-list/page";
+
 import { maximizeWordLimit } from "@/lib/helperFuncs";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import Link from "next/link";
+import { IMyList } from "./MyListPage";
 
 const MyListItem = ({ item }: { item: IMyList }) => (
     <Link href={`/discover/${item.slug}`} key={item._id} className='lg:min-w-52 md:min-w-48 sm:min-w-36 max-sm:w-20 max-sm:max-h-32 bg-white tw-hv-su mx-auto shadow-md hover:shadow-lg p-4 max-sm:p-1 rounded-lg flex flex-col gap-4 justify-between'>
