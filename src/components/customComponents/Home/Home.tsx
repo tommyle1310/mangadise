@@ -7,21 +7,36 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { FaHeart } from "react-icons/fa";
 import Category from '../Category'
-import useFetchHomePage from '@/hooks/useFetchHomePage'
+import useFetchHomePage, { IMangaProps } from '@/hooks/useFetchHomePage'
 import useFetchCategories from '@/hooks/useFetchCategories'
 import usePagination, { renderPageNumbers } from '@/hooks/usePagination'
 import useFetchMangasByType from '@/hooks/useFetchMangasByType'
-import CustomPagination from '../customPagination'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import CategoriesLayoutComponent from '../Categories/CategoriesLayout'
+import { Separator } from '@/components/ui/separator'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { myListArrs } from '@/lib/constants'
+import { Label } from '@/components/ui/label'
+import { toast } from '@/components/ui/use-toast'
+import { ToastAction } from '@/components/ui/toast'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/lib/store'
 
 
 const Home = () => {
+    const user = useSelector((state: RootState) => state.auth.auth)
     const { isLoading, mangas } = useFetchHomePage()
     const { categories } = useFetchCategories()
     const { mangas: NewMangas, isLoading: isLoadingNewMangas } = useFetchMangasByType('truyen-moi')
-    const router = useRouter()
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -30,6 +45,30 @@ const Home = () => {
         }
         fetchUser()
     }, [])
+
+    const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
+        if (user?.email === null || user?.email === '') {
+            toast({
+                title: "This action is not allowed",
+                description: "Please login to use this feature.",
+                action: (
+                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+                ),
+            })
+        } else {
+            const response = await fetch('/api/my-list/update', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type,
+                    owner: user.email,
+                    slug: manga.slug
+                })
+            });
+        }
+    }
 
     const {
         currentItems: categoriesCurrentItems,
@@ -47,12 +86,6 @@ const Home = () => {
         handleNextPage: newMangasHandleNextChange,
         handlePreviousPage: newMangasHandlePreviousChange,
     } = usePagination(NewMangas, 5);
-    // useEffect(() => {
-    //     if (window.innerWidth < 1200) {
-    //         return router.push('/discover')
-    //     }
-
-    // }, [window.innerWidth])
 
     if (isLoading) return (
         <div className='tw-fc w-full  pt-2'>
@@ -68,7 +101,7 @@ const Home = () => {
                         </Button>
                     </div>
                 </div>
-                <Carousel className="max-w-[72rem] mx-auto">
+                <Carousel className="max-w-[40rem] mx-auto">
                     <CarouselContent>
                         {Array.from({ length: 5 }).map((_, index) => (
                             <CarouselItem key={index}>
@@ -77,13 +110,13 @@ const Home = () => {
                                         <CardContent className="gap-12 tw-fc p-6">
                                             <div className="flex justify-between">
                                                 <div className="tw-fc pl-10 gap-4">
-                                                    <Skeleton className='w-56 h-10' />
-                                                    <Skeleton className='w-80 h-16' />
-                                                    <Skeleton className='w-64 h-12' />
+                                                    <Skeleton className='w-24 h-8' />
+                                                    <Skeleton className='w-32 h-12' />
+                                                    <Skeleton className='w-28 h-8' />
                                                 </div>
-                                                <Skeleton className='w-56 h-10' />
+                                                <Skeleton className='w-24 h-8' />
                                             </div>
-                                            <Skeleton className='w-48 h-8' />
+                                            <Skeleton className='w-20 h-4' />
                                         </CardContent>
                                     </Card>
                                 </div>
@@ -105,15 +138,15 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 border rounded-t-2xl p-4 bg-subMain justify-center">
-                    <Skeleton className='h-12 w-48' />
-                    <Skeleton className='h-12 w-64' />
-                    <Skeleton className='h-12 w-56' />
-                    <Skeleton className='h-12 w-80' />
-                    <Skeleton className='h-12 w-24' />
-                    <Skeleton className='h-12 w-36' />
-                    <Skeleton className='h-12 w-56' />
-                    <Skeleton className='h-12 w-48' />
-                    <Skeleton className='h-12 w-48' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
+                    <Skeleton className='h-5 w-24' />
                 </div>
             </div>
 
@@ -144,7 +177,7 @@ const Home = () => {
                         </Button>
                     </div>
                 </div>
-                <Carousel className="xl:max-w-[72rem] lg:max-w-[56rem] w-full mx-auto">
+                <Carousel className="max-w-[40rem] mx-auto max-h-64">
                     <CarouselContent>
                         {mangas?.slice(0, 5)?.map((manga, index) => (
                             <CarouselItem key={index} className=''>
@@ -188,7 +221,31 @@ const Home = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <Button variant={'outline'} className='text-white hover:text-primary bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive' />Save</Button>
+                                                <div className="tw-ic">
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <Button onClick={(e) => { e.stopPropagation() }} variant={'outline'} className='hover:text-white text-white tex group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent>
+                                                            <DialogHeader className='gap-4 max-md:gap-2 tw-fc z-50'>
+                                                                <DialogTitle className='text-center tw-3xl-b'><span className='text-primary'>Mangadise</span></DialogTitle>
+                                                                <DialogDescription className='text-center'>
+                                                                    Where do you want to save this manga?
+                                                                </DialogDescription>
+                                                                <Separator></Separator>
+                                                                <RadioGroup className='grid grid-cols-2 gap-2'>
+                                                                    {myListArrs.slice(2).map(item => (
+                                                                        <div key={item.title} className=" space-x-2">
+                                                                            <RadioGroupItem onClick={(e) => { e.stopPropagation(); handleSaveToMyList(item.title, manga) }} value={item.title} id={item.title} />
+                                                                            <Label htmlFor={item.title}>{item.title}</Label>
+                                                                        </div>
+                                                                    ))}
+                                                                </RadioGroup>
+
+                                                            </DialogHeader>
+                                                        </DialogContent>
+                                                    </Dialog>
+                                                </div>
                                             </div>
                                             <div className="tw-ic">
                                                 {manga?.chaptersLatest

@@ -11,23 +11,35 @@ import { IMangaProps } from '@/hooks/useFetchHomePage'
 import { useRouter } from 'next/navigation'
 import { RootState } from '@/lib/store'
 import { useSelector } from 'react-redux'
+import { ToastAction } from '@/components/ui/toast'
+import { useToast } from '@/components/ui/use-toast'
 
 const DiscoverSlugOverview = ({ detailManga }: { detailManga: IMangaProps }) => {
-    console.log(detailManga);
+    const { toast } = useToast()
     const user = useSelector((state: RootState) => state.auth.auth)
 
     const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
-        const response = await fetch('/api/my-list/update', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                type,
-                owner: user.email,
-                slug: manga.slug
+        if (user?.email === null || user?.email === '') {
+            toast({
+                title: "This action is not allowed",
+                description: "Please login to use this feature.",
+                action: (
+                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+                ),
             })
-        });
+        } else {
+            const response = await fetch('/api/my-list/update', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type,
+                    owner: user.email,
+                    slug: manga.slug
+                })
+            });
+        }
     }
 
     const router = useRouter()

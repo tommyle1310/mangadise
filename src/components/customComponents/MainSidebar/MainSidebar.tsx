@@ -12,7 +12,7 @@ const MainSidebar = () => {
 
 
   return (
-    <div className='2xl:tw-fc gap-3 max-2xl:hidden -mt-20'>
+    <div className='xl:tw-fc gap-3 max-xl:hidden mt-20'>
       {mainSidebarItem.map(item => (
         <MainSidebarItem key={item.title} icon={item.icon} title={item.title} link={item.link} active={item.link === '/' && pathname === '/' || item.link !== '/' && pathname.startsWith(item.link)} />
       ))}

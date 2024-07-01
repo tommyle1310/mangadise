@@ -62,7 +62,7 @@ const NavBar = () => {
         }
 
     }, [user])
-    console.log('check data', session);
+    // console.log('check data', session);
 
 
     useEffect(() => {

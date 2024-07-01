@@ -8,6 +8,7 @@ import SessionWrapper from "@/components/SessionWrapper";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import Footer from "@/components/customComponents/Footer/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,15 +31,16 @@ export default function RootLayout({
             <div className="tw-fc">
               <NavBar />
               <div className="relative flex">
-                <div className="2xl:fixed hidden top-0 left-0 bg-subSecondary h-full py-4 tw-cc 2xl:border-r-2 border-primary 2xl:px-10">
+                <div className="xl:fixed hidden top-0 left-0 bg-subSecondary h-full py-4 tw-cc xl:border-r-2 border-primary xl:px-10">
                   <Mainsidebar />
                 </div>
-                <div className="2xl:ml-64 flex-1 mt-28 min-h-screen">
+                <div className="xl:ml-64  flex-1 mt-28 min-h-screen">
                   {children}
                 </div>
               </div>
               <Separator></Separator>
               <Footer />
+              <Toaster />
             </div>
           </StoreProvider>
         </body>
