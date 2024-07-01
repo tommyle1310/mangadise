@@ -8,7 +8,14 @@ export async function GET(req: Request) {
         const searchParams = new URLSearchParams(url.searchParams)
         const owner = searchParams.get('owner')
         const users = await UserList.find({ owner })
-        return new Response(JSON.stringify(users), { status: 201 })
+        const sortedUsers = users.map(user => {
+            user.dropped.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            user.stalled.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            user.wantToRead.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            user.wontRead.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            return user;
+        });
+        return new Response(JSON.stringify(sortedUsers), { status: 201 })
 
     } catch (e) {
         console.log(e)

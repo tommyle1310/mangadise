@@ -4,15 +4,20 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+
+
 const NotSupportPageModal = () => {
     const [open, setOpen] = useState(true);
     const router = useRouter()
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
+    
 
     return (
-        <Modal open={open} onClose={() => { onCloseModal(); router.push('/') }}  >
-            <div className="tw-fc gap-4">
+        <Modal   classNames={{
+            modal: 'customModal',
+          }} open={open} onClose={() => { onCloseModal(); router.push('/') }}  >
+            <div className="tw-fc gap-4 z-50">
                 <h3 className='tw-lg-sb text-primary text-center'>Developing...</h3>
                 <p>Unfortunately, we are not supporting this feature at the moment, please comeback later :3</p>
                 <Link href='/' className='w-full tw-cc'>

@@ -29,12 +29,12 @@ export const POST = async (req: Request, res: Response) => {
             const duplicatedChapter = history.all.find(item => item.chapterId === chapterId && item.manga === manga);
 
             if (duplicatedChapter) {
-                return new Response('Duplicate chapter ID', { status: 200 });
+                return new Response(JSON.stringify({ message: 'Duplicated chapterId' }), { status: 201 });
             }
 
-            // Update the existing history
+            // Update the existing history with an additional check to prevent duplication
             await History.updateOne(
-                { owner },
+                { owner, "all.chapterId": { $ne: chapterId } },
                 {
                     $push: {
                         all: {
@@ -67,6 +67,6 @@ export const POST = async (req: Request, res: Response) => {
         console.error('Error updating history:', error);
         return new Response('Failed to update history', { status: 500 });
     }
-}
+};
 
 

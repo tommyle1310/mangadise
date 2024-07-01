@@ -13,7 +13,7 @@ const NotSupportPage = ({ feature }: { feature: string }) => {
                 <h3 className='tw-xl-b'>{feature}</h3>
                 <Label htmlFor='search-input-author' className="py-3 px-5 rounded-full shadow-md shadow-bottom-right shadow-primary gap-3 flex items-center border ">
                     <Search />
-                    <input id='search-input-author' className='border-none focus:ring-0 outline-none bg-transparent' />
+                    <input id='search-input-author' className='border-none focus:ring-0 outline-none bg-transparent max-sm:hidden' />
                     <Separator orientation="vertical" />
                     <Filter />
                 </Label>
@@ -39,8 +39,9 @@ const NotSupportPage = ({ feature }: { feature: string }) => {
 
             </div>
 
-
-            <NotSupportPageModal />
+            <div className="max-w-xl mx-auto">
+                <NotSupportPageModal />
+            </div>
         </div>
     )
 }

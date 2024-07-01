@@ -27,7 +27,7 @@ const page = () => {
     const { readManga, readMangaData } = useFetchReadManga(chaptedID)
 
     useEffect(() => {
-        if (chapterId && detailManga && currentPage && user.email !== '' && slug) {
+        if (chapterId && detailManga && currentPage && user.email !== null && user.email !== '' && slug) {
             const fetchManga = async () => {
                 const response = await fetch('/api/history/update', {
                     method: 'POST',

@@ -16,6 +16,9 @@ export const GET = async (req: Request,) => {
         await connectToDB();
         const history = await History.findOne({ owner: userEmail })
         // Check if the history entry already exists
+        if (history) {
+            history.all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        }
 
 
         return new Response(JSON.stringify({ history }), { status: 201 });

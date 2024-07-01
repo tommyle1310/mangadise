@@ -1,6 +1,8 @@
 'use client'
 import MyListItem from '@/components/customComponents/MyList/MyListItem'
+import CustomPagination from '@/components/customComponents/customPagination'
 import { Button } from '@/components/ui/button'
+import usePagination from '@/hooks/usePagination'
 import { myListArrs, myListConstants } from '@/lib/constants'
 import { maximizeWordLimit } from '@/lib/helperFuncs'
 import { RootState } from '@/lib/store'
@@ -53,29 +55,33 @@ const page = () => {
                 return myList?.wantToRead?.length > 0 ? (
                     myList.wantToRead.map((item) => <MyListItem key={item._id} item={item} />)
                 ) : (
-                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
-                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'>
+                        <p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover' className='w-full tw-cc'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
                 );
             case 'Wont read':
                 return myList?.wontRead?.length > 0 ? (
                     myList.wontRead.map((item) => <MyListItem key={item._id} item={item} />)
                 ) : (
-                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
-                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'>
+                        <p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover' className='w-full tw-cc'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
                 );
             case 'Stalled':
                 return myList?.stalled?.length > 0 ? (
                     myList.stalled.map((item) => <MyListItem key={item._id} item={item} />)
                 ) : (
-                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
-                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'>
+                        <p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover' className='w-full tw-cc'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
                 );
             case 'Dropped':
                 return myList?.dropped?.length > 0 ? (
                     myList.dropped.map((item) => <MyListItem key={item._id} item={item} />)
                 ) : (
-                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
-                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'>
+                        <p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover' className='w-full tw-cc'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
                 );
             default:
                 return null;
@@ -144,7 +150,18 @@ const page = () => {
 
         }
     }, [myList])
+    console.log(myList);
 
+
+
+    const {
+        currentItems: historyCurrentItems,
+        currentPage: historyCurrentPage,
+        totalPages: historyTotalPages,
+        handlePageChange: historyHandlePageChange,
+        handleNextPage: historyHandleNextChange,
+        handlePreviousPage: historyHandlePreviousChange,
+    } = usePagination(history?.all, 4);
 
     return (
         <div className='tw-fc gap-4 w-full py-4'>
@@ -155,23 +172,35 @@ const page = () => {
                     ))}
                 </div>
                 {myListArrs.map(item => (
-                    <div className={`bg-secondary grid grid-cols-2 max-w-screen-lg max-sm:gap-1 gap-3 p-4 ${item.title === selectedTab ? 'block' : 'hidden'}`} key={item.title}>
+                    <div className={`bg-secondary  max-w-screen-lg  p-4 ${item.title === selectedTab ? 'block' : 'hidden'}`} key={item.title}>
                         {selectedTab === 'History' && item.title === selectedTab &&
-                            history?.all?.map((item, index) => (
-                                <Link href={`/discover/${item.slug}/${item.chapterId}&${item.chapterNum}`} key={index} className='lg:min-w-52 md:min-w-48 sm:min-w-36 max-sm:w-20  max-sm:max-h-28 bg-white tw-hv-su shadow-md hover:shadow-lg p-4 max-sm:p-1 rounded-lg flex flex-col gap-2 justify-between'>
-                                    <div className="relative w-full aspect-square max-sm:mx-auto">
-                                        <img
-                                            src={item.poster}
-                                            alt="Manga Image"
-                                            className="absolute top-0 left-0 w-full h-full object-cover md:rounded-lg"
-                                        />
-                                    </div>
-                                    <div className='flex flex-col sm:gap-1'>
-                                        <h4 className='tw-sm-b max-sm:leading-3 max-sm:text-[8px]'>{maximizeWordLimit(item.manga)}</h4>
-                                        <p className='text-xs max-sm:text-[6px]'>EP. <span className='text-subMain'>{item.chapterNum}</span></p>
-                                    </div>
-                                </Link>
-                            ))
+                            <div className='grid grid-cols-2 max-sm:gap-1 gap-3'>
+                                <div className="col-span-2">
+                                    < CustomPagination
+                                        currentPage={historyCurrentPage}
+                                        handleNext={historyHandleNextChange}
+                                        handlePageChange={historyHandlePageChange}
+                                        handlePrev={historyHandlePreviousChange}
+                                        totalPages={historyTotalPages}
+                                    />
+                                </div>
+                                {historyCurrentItems?.map((item, index) => (
+                                    <Link href={`/discover/${item.slug}/${item.chapterId}&${item.chapterNum}`} key={index} className='lg:min-w-52 md:min-w-48 sm:min-w-36 max-sm:w-20  max-sm:max-h-28 bg-white tw-hv-su shadow-md hover:shadow-lg p-4 max-sm:p-1 rounded-lg flex flex-col gap-2 justify-between'>
+                                        <div className="relative w-full aspect-square max-sm:mx-auto">
+                                            <img
+                                                src={item.poster}
+                                                alt="Manga Image"
+                                                className="absolute top-0 left-0 w-full h-full object-cover md:rounded-lg"
+                                            />
+                                        </div>
+                                        <div className='flex flex-col sm:gap-1'>
+                                            <h4 className='tw-sm-b max-sm:leading-3 max-sm:text-[8px]'>{maximizeWordLimit(item.manga)}</h4>
+                                            <p className='text-xs max-sm:text-[6px]'>EP. <span className='text-subMain'>{item.chapterNum}</span></p>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+
                         }
                         {selectedTab === 'Reading' && item.title === selectedTab &&
                             <div className="col-span-2 ">
@@ -190,7 +219,9 @@ const page = () => {
                                 </Link>
                             </div>
                         }
-                        {renderMangaList(selectedTab, myList[0] || {})}
+                        <div className="grid grid-cols-2 gap-2">
+                            {renderMangaList(selectedTab, myList[0] || {})}
+                        </div>
                     </div>
                 ))}
             </div>

@@ -120,11 +120,6 @@ const NavBar = () => {
                                     <MainSidebarItem key={item.title} icon={item.icon} title={item.title} link={item.link} active={item.link === '/' && pathname === '/' || item.link !== '/' && pathname.startsWith(item.link)} />
                                 ))}
                             </div>
-                            <SheetFooter>
-                                <SheetClose asChild>
-                                    <Button type="submit">Save changes</Button>
-                                </SheetClose>
-                            </SheetFooter>
                         </SheetContent>
                     </Sheet>
                 </div>
