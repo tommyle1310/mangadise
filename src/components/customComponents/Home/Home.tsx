@@ -27,8 +27,6 @@ const Home = () => {
         const fetchUser = async () => {
             const response = await fetch('/api/user')
             const data = await response.json()
-            console.log(data);
-
         }
         fetchUser()
     }, [])

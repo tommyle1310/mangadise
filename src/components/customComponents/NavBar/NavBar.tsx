@@ -156,10 +156,10 @@ const NavBar = () => {
                                 </Avatar>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56">
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
+                                {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuSeparator /> */}
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem>
+                                    {/* <DropdownMenuItem>
                                         <User className="mr-2 h-4 w-4" />
                                         <span>Profile</span>
                                         <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -168,7 +168,7 @@ const NavBar = () => {
                                         <Settings className="mr-2 h-4 w-4" />
                                         <span>Settings</span>
                                         <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem> */}
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>

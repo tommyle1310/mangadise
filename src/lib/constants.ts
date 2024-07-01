@@ -15,35 +15,36 @@ export const mainSidebarItem = [
         link: '/categories'
     },
     {
-        title: 'Authors',
-        icon: 'Users',
-        link: '/authors',
-
-    },
-    {
-        title: 'Notifications',
-        icon: 'MessageSquareDot',
-        link: '/notifications'
-    },
-    {
-        title: 'Profile',
-        icon: 'SquareUser',
-        link: '/profile'
-    }, {
         title: 'My List',
         icon: 'BookMarked',
         link: '/my-list'
     },
     {
-        title: 'Settings',
-        icon: 'Bolt',
-        link: '/settings'
+        title: 'Authors',
+        icon: 'Users',
+        link: '/authors',
+
     },
+    // {
+    //     title: 'Notifications',
+    //     icon: 'MessageSquareDot',
+    //     link: '/notifications'
+    // },
     {
-        title: 'Donate',
-        icon: 'Gift',
-        link: '/donate'
+        title: 'Profile',
+        icon: 'SquareUser',
+        link: '/profile'
     },
+    // {
+    //     title: 'Settings',
+    //     icon: 'Bolt',
+    //     link: '/settings'
+    // },
+    // {
+    //     title: 'Donate',
+    //     icon: 'Gift',
+    //     link: '/donate'
+    // },
 ]
 export const mainSidebarItemMobile = [
     {
@@ -57,35 +58,36 @@ export const mainSidebarItemMobile = [
         link: '/categories'
     },
     {
-        title: 'Authors',
-        icon: 'Users',
-        link: '/authors'
-
-    },
-    {
-        title: 'Notifications',
-        icon: 'MessageSquareDot',
-        link: '/notifications'
-    },
-    {
-        title: 'Profile',
-        icon: 'SquareUser',
-        link: '/profile'
-    }, {
         title: 'My List',
         icon: 'BookMarked',
         link: '/my-list'
     },
     {
-        title: 'Settings',
-        icon: 'Bolt',
-        link: '/settings'
+        title: 'Authors',
+        icon: 'Users',
+        link: '/authors'
+
     },
+    // {
+    //     title: 'Notifications',
+    //     icon: 'MessageSquareDot',
+    //     link: '/notifications'
+    // },
     {
-        title: 'Donate',
-        icon: 'Gift',
-        link: '/donate'
+        title: 'Profile',
+        icon: 'SquareUser',
+        link: '/profile'
     },
+    // {
+    //     title: 'Settings',
+    //     icon: 'Bolt',
+    //     link: '/settings'
+    // },
+    // {
+    //     title: 'Donate',
+    //     icon: 'Gift',
+    //     link: '/donate'
+    // },
 ]
 
 
