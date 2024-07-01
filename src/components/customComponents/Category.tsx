@@ -152,7 +152,29 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                                                 }
                                                 <div className="tw-ic flex-wrap">{maximizeWordLimit(manga.category.map((item, i, arr) => i === arr.length - 1 ? `${item.name}` : ` ${item.name} -`).join(' '))}</div>
                                                 <div className="tw-ic">
-                                                    <Button onClick={(e) => { e.stopPropagation() }} variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <Button onClick={(e) => { e.stopPropagation() }} variant={'outline'} className='hover:text-white group hover:bg-destructive bg-transparent z-10 tw-ic gap-1'><FaHeart className='text-destructive group-hover:text-white' />Save</Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent>
+                                                            <DialogHeader className='gap-4 max-md:gap-2 tw-fc z-50'>
+                                                                <DialogTitle className='text-center tw-3xl-b'><span className='text-primary'>Mangadise</span></DialogTitle>
+                                                                <DialogDescription className='text-center'>
+                                                                    Where do you want to save this manga?
+                                                                </DialogDescription>
+                                                                <Separator></Separator>
+                                                                <RadioGroup className='grid grid-cols-2 gap-2'>
+                                                                    {myListArrs.slice(2).map(item => (
+                                                                        <div key={item.title} className=" space-x-2">
+                                                                            <RadioGroupItem onClick={(e) => { e.stopPropagation(); handleSaveToMyList(item.title, manga) }} value={item.title} id={item.title} />
+                                                                            <Label htmlFor={item.title}>{item.title}</Label>
+                                                                        </div>
+                                                                    ))}
+                                                                </RadioGroup>
+
+                                                            </DialogHeader>
+                                                        </DialogContent>
+                                                    </Dialog>
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -173,7 +195,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                                     backgroundSize: 'cover',
                                 }} />
                                 <Separator className='max-sm:hidden ' />
-                                <h4 className='text-primary p-3 leading-4 tw-lg-sb text-sm'>{maximizeWordLimit(manga.name, 30)}</h4>
+                                <h4 className='text-primary p-3 leading-4 max-sm:leading-[20px] tw-lg-sb text-sm'>{maximizeWordLimit(manga.name, 30)}</h4>
 
                                 <Separator className='max-sm:hidden' />
                                 <div className="tw-fc  gap-2 sm:p-2">

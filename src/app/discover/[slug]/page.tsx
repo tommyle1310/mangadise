@@ -4,6 +4,7 @@ import React from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import useFetchDetailManga from '@/hooks/useFetchDetailManga'
 import { Button } from '@/components/ui/button'
+import { maximizeWordLimit } from '@/lib/helperFuncs'
 
 const page = () => {
     const params = useParams()
@@ -30,7 +31,7 @@ const page = () => {
                     </div>
                     <div className="tw-fc gap-2">
                         {item.server_data.map((item, index) => (
-                            <Button onClick={() => handleRead(item)} key={index} variant={'outline'} className='tw-ic justify-start gap-1 tw-md-sb bg-subSecondary'>EP <span className='tw-md-b text-primary'>{item.chapter_name}</span> {item.filename}</Button>
+                            <Button onClick={() => handleRead(item)} key={index} variant={'outline'} className='tw-ic justify-start gap-1 tw-md-sb bg-subSecondary'>EP <span className='tw-md-b text-primary'>{item.chapter_name}</span> {maximizeWordLimit(item.filename, 36)}</Button>
                         ))}
                     </div>
                 </div>

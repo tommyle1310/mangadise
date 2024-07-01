@@ -49,12 +49,12 @@ const Home = () => {
         handleNextPage: newMangasHandleNextChange,
         handlePreviousPage: newMangasHandlePreviousChange,
     } = usePagination(NewMangas, 5);
-    useEffect(() => {
-        if (window.innerWidth < 1200) {
-            return router.push('/discover')
-        }
+    // useEffect(() => {
+    //     if (window.innerWidth < 1200) {
+    //         return router.push('/discover')
+    //     }
 
-    }, [window.innerWidth])
+    // }, [window.innerWidth])
 
     if (isLoading) return (
         <div className='tw-fc w-full  pt-2'>
@@ -212,8 +212,8 @@ const Home = () => {
                     <CarouselPrevious />
                     <CarouselNext />
                 </Carousel>
-                <CategoriesLayoutComponent />
             </div>
+            <CategoriesLayoutComponent />
             <Category
                 isLoading={isLoadingNewMangas}
                 title={{ normal: 'Recent', bold: 'uploads' }}

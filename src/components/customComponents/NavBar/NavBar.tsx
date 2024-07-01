@@ -43,6 +43,7 @@ import { RootState } from '@/lib/store'
 import { signOut, useSession } from 'next-auth/react'
 import { signOut as logOut } from '../../../lib/features/auth/authSlice'
 import { handleLogin } from '@/lib/authOptions'
+import Link from 'next/link'
 
 
 const NavBar = () => {
@@ -86,14 +87,14 @@ const NavBar = () => {
     };
 
     return (
-        <div className="  z-20 bg-secondary w-full  fixed border-b-2 border-primary shadow-sm shadow-bottom-right shadow-primary ">
+        <div className="  z-20 bg-white w-full  fixed border-b-2 border-primary shadow-sm shadow-bottom-right shadow-primary ">
             <div className="max-w-screen-2xl mx-auto tw-jb p-4">
                 <div className="2xl:hidden max-2xl:block">
                     <Sheet >
                         <SheetTrigger asChild>
                             <Button variant="outline"> <Menu /></Button>
                         </SheetTrigger>
-                        <SheetContent className='max-sm:w-[90%]' side='left'>
+                        <SheetContent className='max-sm:w-[90%] overflow-y-scroll' side='left'>
                             <SheetHeader>
                                 <SheetTitle className='text-primary'>Mangadise</SheetTitle>
                                 <SheetDescription className='max-sm:hidden'>
@@ -101,7 +102,7 @@ const NavBar = () => {
                                 </SheetDescription>
                             </SheetHeader>
                             <div className="grid gap-4 py-4">
-                                <Label htmlFor='search-input' className=" w-full  px-2 py-1 max-sm:py-3 tw-jb 2xl:hidden rounded-full shadow-md shadow-bottom-right shadow-primary max-sm:gap-1 gap-3 flex items-center border ">
+                                <Label htmlFor='search-input' className=" w-full  px-4 py-1 max-sm:py-3 tw-jb 2xl:hidden rounded-full shadow-md shadow-bottom-right shadow-primary max-sm:gap-1 gap-3 flex items-center border ">
                                     <Search className='max-sm:hidden' />
                                     <input
                                         value={query}
@@ -129,7 +130,15 @@ const NavBar = () => {
                 </div>
 
 
-                <div className="p-3 bg-destructive">Managadise</div>
+                <Link href='/' className='w-20 md:w-32'>
+                    {/* <AspectRatio ratio={16 / 9} className="max-w-32 h-32 bg-red-300"> */}
+                    <img
+                        src={'https://res.cloudinary.com/dlavqnrlx/image/upload/v1719802260/mangadise_x5sjcl.png'}
+                        alt="Manga Image"
+                        className=" top-0 left-0 w-full mx-auto h-full object-fill md:rounded-lg"
+                    />
+                    {/* </AspectRatio> */}
+                </Link>
                 <div className="flex gap-3 ">
                     <Label htmlFor='search-input' className="py-3 px-5 max-2xl:hidden rounded-full shadow-md shadow-bottom-right shadow-primary gap-3 flex items-center border ">
                         <Search />
@@ -161,69 +170,11 @@ const NavBar = () => {
                                         <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
-                                        <CreditCard className="mr-2 h-4 w-4" />
-                                        <span>Billing</span>
-                                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
                                         <Settings className="mr-2 h-4 w-4" />
                                         <span>Settings</span>
                                         <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Keyboard className="mr-2 h-4 w-4" />
-                                        <span>Keyboard shortcuts</span>
-                                        <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                                    </DropdownMenuItem>
                                 </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuGroup>
-                                    <DropdownMenuItem>
-                                        <Users className="mr-2 h-4 w-4" />
-                                        <span>Team</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger>
-                                            <UserPlus className="mr-2 h-4 w-4" />
-                                            <span>Invite users</span>
-                                        </DropdownMenuSubTrigger>
-                                        <DropdownMenuPortal>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuItem>
-                                                    <Mail className="mr-2 h-4 w-4" />
-                                                    <span>Email</span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem>
-                                                    <MessageSquare className="mr-2 h-4 w-4" />
-                                                    <span>Message</span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                <DropdownMenuItem>
-                                                    <PlusCircle className="mr-2 h-4 w-4" />
-                                                    <span>More...</span>
-                                                </DropdownMenuItem>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuPortal>
-                                    </DropdownMenuSub>
-                                    <DropdownMenuItem>
-                                        <Plus className="mr-2 h-4 w-4" />
-                                        <span>New Team</span>
-                                        <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-                                    </DropdownMenuItem>
-                                </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <Github className="mr-2 h-4 w-4" />
-                                    <span>GitHub</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <LifeBuoy className="mr-2 h-4 w-4" />
-                                    <span>Support</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem disabled>
-                                    <Cloud className="mr-2 h-4 w-4" />
-                                    <span>API</span>
-                                </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
                                     <LogOut className="mr-2 h-4 w-4" />

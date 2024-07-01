@@ -30,7 +30,7 @@ export default function RootLayout({
                 <div className="2xl:fixed hidden top-0 left-0 bg-subSecondary h-full py-4 tw-cc 2xl:border-r-2 border-primary 2xl:px-10">
                   <Mainsidebar />
                 </div>
-                <div className="2xl:ml-64  flex-1 mt-20">
+                <div className="2xl:ml-64  flex-1 mt-28">
                   {children}
                 </div>
               </div>

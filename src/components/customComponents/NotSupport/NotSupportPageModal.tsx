@@ -11,7 +11,7 @@ const NotSupportPageModal = () => {
     const onCloseModal = () => setOpen(false);
 
     return (
-        <Modal open={open} onClose={() => { onCloseModal(); router.push('/') }} center>
+        <Modal open={open} onClose={() => { onCloseModal(); router.push('/') }}  >
             <div className="tw-fc gap-4">
                 <h3 className='tw-lg-sb text-primary text-center'>Developing...</h3>
                 <p>Unfortunately, we are not supporting this feature at the moment, please comeback later :3</p>

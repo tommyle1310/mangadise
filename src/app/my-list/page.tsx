@@ -50,13 +50,33 @@ const page = () => {
     }) => {
         switch (selectedTab) {
             case 'Want to read':
-                return myList?.wantToRead?.map((item) => <MyListItem key={item._id} item={item} />);
+                return myList?.wantToRead?.length > 0 ? (
+                    myList.wantToRead.map((item) => <MyListItem key={item._id} item={item} />)
+                ) : (
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                );
             case 'Wont read':
-                return myList?.wontRead?.map((item) => <MyListItem key={item._id} item={item} />);
+                return myList?.wontRead?.length > 0 ? (
+                    myList.wontRead.map((item) => <MyListItem key={item._id} item={item} />)
+                ) : (
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                );
             case 'Stalled':
-                return myList?.stalled?.map((item) => <MyListItem key={item._id} item={item} />);
+                return myList?.stalled?.length > 0 ? (
+                    myList.stalled.map((item) => <MyListItem key={item._id} item={item} />)
+                ) : (
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                );
             case 'Dropped':
-                return myList?.dropped?.map((item) => <MyListItem key={item._id} item={item} />);
+                return myList?.dropped?.length > 0 ? (
+                    myList.dropped.map((item) => <MyListItem key={item._id} item={item} />)
+                ) : (
+                    <div className='w-full col-span-2  tw-fc justify-center gap-2'><p className='text-center w-full'>This list is empty</p>
+                        <Link href='/discover'><Button variant={'outline'} className='bg-transparent border-primary text-primary'>Discover more mangas</Button></Link></div>
+                );
             default:
                 return null;
         }
