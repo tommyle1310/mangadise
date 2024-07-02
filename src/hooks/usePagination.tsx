@@ -81,13 +81,6 @@ export const renderPageNumbers = ({
 }) => {
     const pageNumbers = [];
 
-    // Function to determine if ellipses (...) should be shown
-    const shouldShowEllipses = (pageNumber: number) => {
-        return (
-            pageNumber > 2 && pageNumber < totalPages - 1 && Math.abs(currentPage - pageNumber) > 2
-        );
-    };
-
     // Add the first page
     pageNumbers.push(
         <PaginationLink
@@ -99,12 +92,12 @@ export const renderPageNumbers = ({
         </PaginationLink>
     );
 
-    // Add ellipses if needed
-    if (shouldShowEllipses(2)) {
-        pageNumbers.push(<PaginationEllipsis />);
+    // Add ellipses before the current page range if needed
+    if (currentPage > 4) {
+        pageNumbers.push(<PaginationEllipsis key="start-ellipsis" />);
     }
 
-    // Add pages
+    // Add pages around the current page
     for (let i = Math.max(2, currentPage - 2); i <= Math.min(currentPage + 2, totalPages - 1); i++) {
         pageNumbers.push(
             <PaginationLink
@@ -117,9 +110,9 @@ export const renderPageNumbers = ({
         );
     }
 
-    // Add ellipses if needed
-    if (shouldShowEllipses(totalPages - 1)) {
-        pageNumbers.push(<PaginationEllipsis />);
+    // Add ellipses after the current page range if needed
+    if (currentPage < totalPages - 3) {
+        pageNumbers.push(<PaginationEllipsis key="end-ellipsis" />);
     }
 
     // Add the last page
@@ -137,3 +130,4 @@ export const renderPageNumbers = ({
 
     return pageNumbers;
 };
+

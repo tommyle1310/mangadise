@@ -7,13 +7,13 @@ const CustomPagination = ({ totalPages, currentPage, handleNext, handlePrev, han
     return (
         <Pagination className='bg-black rounded-lg p-2 text-white'>
             <PaginationContent className='tw-ic'>
-                <PaginationItem>
+                <PaginationItem className='max-sm:hidden sm:block'>
                     <PaginationPrevious className='cursor-pointer' onClick={handlePrev} />
                 </PaginationItem>
-                <PaginationItem className='max-sm:hidden sm:block tw-ic'>
+                <PaginationItem className=' tw-ic'>
                     {renderPageNumbers({ totalPages: totalPages, currentPage: currentPage, handlePageChange: handlePageChange })}
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className='max-sm:hidden sm:block'>
                     <PaginationNext className='cursor-pointer' onClick={handleNext} />
                 </PaginationItem>
             </PaginationContent>

@@ -81,14 +81,14 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                 opts={{
                     align: "start",
                 }}
-                className="max-w-screen-xl tw-jb "
+                className="max-w-screen-md tw-jb "
             >
                 <CarouselContent>
                     {Array.from({ length: 10 }).map((_, index) => (
                         <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/5">
                             <Card>
                                 <CardContent className="flex h-52 tw-fc gap-3 p-4">
-                                    <Skeleton className="flex-1 w-full" />
+                                    <Skeleton className="flex-1 w-24" />
                                     <Separator />
                                     <div className="tw-cc tw-fc gap-3">
                                         <Skeleton className='w-12 h-3' />
@@ -99,7 +99,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                                             <Skeleton className='h-2 w-4' />
                                             <Skeleton className='h-2 w-6' />
                                         </div>
-                                        <Skeleton className='h-4 w-full' />
+                                        <Skeleton className='h-4 w-24' />
                                         <Skeleton className='h-4 w-20' />
                                         <Skeleton className='h-4 w-16' />
                                     </div>
@@ -195,10 +195,11 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                                         backgroundSize: 'cover',
                                     }} />
                                     <Separator className='max-sm:hidden ' />
-                                    <h4 className='text-primary p-3 leading-4 max-sm:leading-[20px] tw-lg-sb text-sm'>{maximizeWordLimit(manga.name, 30)}</h4>
-
+                                    <ScrollArea className="tw-cc tw-fc gap-3 h-20 ">
+                                        <h4 className='text-primary p-3 leading-4 max-sm:leading-[20px] tw-lg-sb text-xs '>{manga.name}</h4>
+                                    </ScrollArea>
                                     <Separator className='max-sm:hidden' />
-                                    <div className="tw-fc  gap-2 sm:p-2">
+                                    <div className="tw-fc  gap-2 sm:p-2 ">
                                         {
                                             manga?.chaptersLatest?.length > 0 ?
                                                 <div className="tw-md-sb tw-ic gap-1 px-3 pb-3 text-xs">
