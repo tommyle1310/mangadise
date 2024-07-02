@@ -30,6 +30,7 @@ import { useToast } from '../ui/use-toast'
 import { ToastAction } from '../ui/toast'
 import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import { ScrollArea } from '../ui/scroll-area'
+import useSaveToMyList from '@/hooks/useSaveToMyList'
 
 type CategoryProps = {
     title: {
@@ -60,29 +61,8 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
         router.push(`/discover/${manga.slug}`)
     }
 
-    const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
-        if (user?.email === null || user?.email === '') {
-            toast({
-                title: "This action is not allowed",
-                description: "Please login to use this feature.",
-                action: (
-                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-                ),
-            })
-        } else {
-            const response = await fetch('/api/my-list/update', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    type,
-                    owner: user.email,
-                    slug: manga.slug
-                })
-            });
-        }
-    }
+    const { handleSaveToMyList } = useSaveToMyList(user);
+
 
     if (isLoading || !list) return (
         <div className="bg-black pb-10 text-white p-5 px-10 tw-fc gap-4">

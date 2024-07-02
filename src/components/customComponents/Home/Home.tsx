@@ -30,6 +30,7 @@ import { toast } from '@/components/ui/use-toast'
 import { ToastAction } from '@/components/ui/toast'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/lib/store'
+import useSaveToMyList from '@/hooks/useSaveToMyList'
 
 
 const Home = () => {
@@ -46,29 +47,7 @@ const Home = () => {
         fetchUser()
     }, [])
 
-    const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
-        if (user?.email === null || user?.email === '') {
-            toast({
-                title: "This action is not allowed",
-                description: "Please login to use this feature.",
-                action: (
-                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-                ),
-            })
-        } else {
-            const response = await fetch('/api/my-list/update', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    type,
-                    owner: user.email,
-                    slug: manga.slug
-                })
-            });
-        }
-    }
+    const { handleSaveToMyList } = useSaveToMyList(user);
 
     const {
         currentItems: categoriesCurrentItems,

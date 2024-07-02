@@ -13,34 +13,13 @@ import { RootState } from '@/lib/store'
 import { useSelector } from 'react-redux'
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
+import useSaveToMyList from '@/hooks/useSaveToMyList'
 
 const DiscoverSlugOverview = ({ detailManga }: { detailManga: IMangaProps }) => {
     const { toast } = useToast()
     const user = useSelector((state: RootState) => state.auth.auth)
 
-    const handleSaveToMyList = async (type: string, manga: IMangaProps) => {
-        if (user?.email === null || user?.email === '') {
-            toast({
-                title: "This action is not allowed",
-                description: "Please login to use this feature.",
-                action: (
-                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-                ),
-            })
-        } else {
-            const response = await fetch('/api/my-list/update', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    type,
-                    owner: user.email,
-                    slug: manga.slug
-                })
-            });
-        }
-    }
+    const { handleSaveToMyList } = useSaveToMyList(user);
 
     const router = useRouter()
     return (

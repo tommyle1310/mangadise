@@ -88,7 +88,7 @@ export const PATCH = async (req: Request, res: Response) => {
             await newUserList.save();
         }
 
-        return new Response(JSON.stringify({ message: 'Update successfully' }), { status: 200 });
+        return new Response(JSON.stringify({ message: 'Update successfully', EC: 0 }), { status: 200 });
     } catch (error) {
         console.error('Error updating history:', error);
         return new Response('Failed to update my-list data', { status: 500 });
