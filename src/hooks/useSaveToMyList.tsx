@@ -31,8 +31,8 @@ const useSaveToMyList = (user: AuthState) => {
             console.log(data);
             if (data?.EC === 0) {
                 toast({
-                    title: `Successfully added this manga to ${type} list`,
-                    description: "You can find it anytime in My list",
+                    title: data?.message,
+                    description: "You can check it anytime in My list",
                     action: (
                         <ToastAction altText="Goto schedule to undo">Close</ToastAction>
                     ),

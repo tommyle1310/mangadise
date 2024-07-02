@@ -137,7 +137,7 @@ const Category: React.FC<CategoryProps> = ({ title, type, list, isLoading, curre
                                                 } />
                                                 <Separator />
                                                 <ScrollArea className="tw-cc tw-fc gap-3 h-10 ">
-                                                    <h4 className='text-primary text-center tw-md-b'>{maximizeWordLimit(manga.name)}</h4>
+                                                    <h4 className='text-primary text-center tw-md-b'>{manga.name}</h4>
                                                 </ScrollArea>
                                                 <Separator />
                                                 <div className="tw-fc  gap-2 p-2">
